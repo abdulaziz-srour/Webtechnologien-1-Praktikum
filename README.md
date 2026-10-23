@@ -14,6 +14,10 @@ Ausführlich: siehe [INSTALLATION.md](INSTALLATION.md).
 - **Lernen:** erst Multiple Choice, dann Schreiben; falsche Karten kommen wieder, bis alle sitzen
 - **Schreiben:** Antwort eintippen, tolerant bei Groß-/Kleinschreibung und kleinen Tippfehlern; Runden mit den falschen Karten
 - **Test:** gemischt aus Multiple Choice, Wahr/Falsch und Freitext, mit Punktzahl; falsche Antwortmöglichkeiten stammen aus anderen Karten des Sets
+- **Zuordnen:** Begriffe und Definitionen per Drag-and-Drop (oder zwei Klicks) zusammenführen, auf Zeit mit gespeicherter Bestzeit
+- **Vorlesen:** Begriffe und Definitionen über die Sprachausgabe des Browsers (Web Speech API), Sprache pro Set einstellbar
+- **Extras:** Statistik pro Set und pro Karte, Karten mit ★ markieren und nur diese lernen, Suche über alle Karten,
+  Ordner/Fächer, Dark Mode (folgt der Systemeinstellung, umschaltbar)
 
 ## Aufbau
 
@@ -33,3 +37,9 @@ Ausführlich: siehe [INSTALLATION.md](INSTALLATION.md).
 | `js/bearbeiten.js` | JavaScript | Zeilen im Editor hinzufügen/entfernen, Import-Vorschau |
 | `js/<modus>.js` | JavaScript | Logik des jeweiligen Lernmodus |
 | `data/sets.json` | JSON | gespeicherte Daten (wird automatisch angelegt) |
+
+## Tipp für das Abgabe-Video
+
+Für die sichtbare Code-Änderung eignet sich z. B. die Überschrift „Meine Lernsets“ in `index.php`
+oder ein Knopftext wie „Umdrehen“ in `modi/karteikarten.php`: Text ändern, speichern, im Browser
+neu laden (F5) – die Änderung ist sofort sichtbar, ein Neustart des PHP-Servers ist nicht nötig.

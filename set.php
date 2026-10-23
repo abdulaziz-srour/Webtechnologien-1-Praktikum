@@ -100,6 +100,7 @@ require __DIR__ . '/inc/kopf.php';
                 <span class="begriff"><?= e($karte['begriff']) ?></span>
                 <span class="definition"><?= e($karte['definition']) ?></span>
                 <span class="knoepfe">
+                    <span class="leise zaehlung" title="So oft richtig / falsch beantwortet">✓ <?= $karte['richtig'] ?> · ✗ <?= $karte['falsch'] ?></span>
                     <!-- data-*-Attribute werden von js/gemeinsam.js ausgelesen. -->
                     <button type="button" class="knopf-klein" title="Vorlesen"
                             data-vorlesen="<?= e($karte['begriff']) ?>" data-sprache="<?= e($set['sprache_begriff']) ?>">🔊</button>

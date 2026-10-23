@@ -9,4 +9,5 @@ return [
     'lernen'       => ['symbol' => '🎯', 'name' => 'Lernen',       'text' => 'Wiederholt Karten, bis sie sitzen'],
     'schreiben'    => ['symbol' => '✍️', 'name' => 'Schreiben',    'text' => 'Antwort eintippen, Tippfehler erlaubt'],
     'test'         => ['symbol' => '📝', 'name' => 'Test',         'text' => 'Multiple Choice, Wahr/Falsch, Freitext'],
+    'zuordnen'     => ['symbol' => '🧩', 'name' => 'Zuordnen',     'text' => 'Paare per Drag-and-Drop, auf Zeit'],
 ];
