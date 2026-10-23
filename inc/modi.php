@@ -6,4 +6,6 @@
  */
 return [
     'karteikarten' => ['symbol' => '🃏', 'name' => 'Karteikarten', 'text' => 'Umdrehen, blättern, mischen, vorlesen'],
+    'lernen'       => ['symbol' => '🎯', 'name' => 'Lernen',       'text' => 'Wiederholt Karten, bis sie sitzen'],
+    'schreiben'    => ['symbol' => '✍️', 'name' => 'Schreiben',    'text' => 'Antwort eintippen, Tippfehler erlaubt'],
 ];

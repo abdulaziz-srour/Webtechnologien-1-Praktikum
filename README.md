@@ -11,6 +11,8 @@ Ausführlich: siehe [INSTALLATION.md](INSTALLATION.md).
 - Lernsets anlegen, bearbeiten, löschen; Karten mit Begriff und Definition
 - Import per Copy-Paste (eine Karte pro Zeile, z. B. `Begriff ; Definition`)
 - **Karteikarten:** umdrehen mit Animation, blättern, mischen, Seiten tauschen, vorlesen, automatisch abspielen
+- **Lernen:** erst Multiple Choice, dann Schreiben; falsche Karten kommen wieder, bis alle sitzen
+- **Schreiben:** Antwort eintippen, tolerant bei Groß-/Kleinschreibung und kleinen Tippfehlern; Runden mit den falschen Karten
 
 ## Aufbau
 
