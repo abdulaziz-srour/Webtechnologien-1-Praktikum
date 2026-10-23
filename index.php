@@ -74,6 +74,7 @@ require __DIR__ . '/inc/kopf.php';
             <li>
                 <a href="set.php?id=<?= e($set['id']) ?>"><?= e($set['name']) ?></a>
                 <span class="leise"><?= $stat['gesamt'] ?> Karten, <?= $stat['prozent'] ?> % gekonnt</span>
+                <span class="fortschritt"><span style="width: <?= $stat['prozent'] ?>%"></span></span>
             </li>
         <?php endforeach; ?>
     </ul>

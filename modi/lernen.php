@@ -44,6 +44,6 @@
             <button type="button" class="knopf" id="ln-nochmal">Nochmal lernen</button>
         </div>
     </div>
-    <p class="leise mitte">Jede Karte musst du erst im Multiple Choice und dann schriftlich richtig beantworten.
+    <p class="leise">Jede Karte musst du erst im Multiple Choice und dann schriftlich richtig beantworten.
         Falsche Karten kommen bald wieder dran.</p>
 </div>

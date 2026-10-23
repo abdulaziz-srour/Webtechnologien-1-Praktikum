@@ -22,5 +22,5 @@
         <button type="button" class="knopf-klein" id="kk-auto">Automatisch abspielen</button>
         <button type="button" class="knopf-klein stern" id="kk-stern">Markieren</button>
     </div>
-    <p class="leise mitte">Tastatur: Leertaste = umdrehen, Pfeiltasten = blättern</p>
+    <p class="leise">Tastatur: Leertaste = umdrehen, Pfeiltasten = blättern</p>
 </div>

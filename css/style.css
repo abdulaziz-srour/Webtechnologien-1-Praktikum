@@ -12,8 +12,10 @@
 /* ---------- 1. Farben ---------- */
 
 :root {
-    --hintergrund: #ffffff;
-    --flaeche: #f3f3f3;
+    --seite: #eef1f5;           /* grauer Rand um den Inhalt */
+    --hintergrund: #ffffff;     /* Inhaltsbereich */
+    --flaeche: #f5f7fa;
+    --kopf: #24477e;            /* Kopfleiste */
     --text: #222222;
     --leise: #666666;
     --rand: #cccccc;
@@ -24,12 +26,15 @@
     --falsch: #c62828;
     --falsch-hell: #fbe9e9;
     --stern: #e0a800;
+    --radius: 4px;
 }
 
 /* Dunkle Farben: wenn man sie selbst gewählt hat ... */
 :root[data-thema="dunkel"] {
+    --seite: #161616;
     --hintergrund: #1e1e1e;
     --flaeche: #2a2a2a;
+    --kopf: #1a2c4a;
     --text: #e6e6e6;
     --leise: #a0a0a0;
     --rand: #444444;
@@ -42,8 +47,10 @@
 /* ... oder wenn das Betriebssystem dunkel eingestellt ist (und nicht "hell" gewählt wurde). */
 @media (prefers-color-scheme: dark) {
     :root:not([data-thema="hell"]) {
+        --seite: #161616;
         --hintergrund: #1e1e1e;
         --flaeche: #2a2a2a;
+        --kopf: #1a2c4a;
         --text: #e6e6e6;
         --leise: #a0a0a0;
         --rand: #444444;
@@ -71,7 +78,7 @@ body {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 16px;
     line-height: 1.5;
-    background: var(--hintergrund);
+    background: var(--seite);
     color: var(--text);
 }
 
@@ -85,8 +92,10 @@ h1 {
 }
 
 h2 {
-    font-size: 1.2rem;
-    margin: 1.5rem 0 0.5rem;
+    font-size: 1.15rem;
+    margin: 1.5rem 0 0.6rem;
+    padding-bottom: 0.25rem;
+    border-bottom: 1px solid var(--rand);
 }
 
 .kopfleiste {
@@ -95,8 +104,24 @@ h2 {
     align-items: center;
     flex-wrap: wrap;
     gap: 0.5rem;
-    padding: 0.6rem 1rem;
-    border-bottom: 1px solid var(--rand);
+    padding: 0.7rem 1.5rem;
+    background: var(--kopf);
+    color: #ffffff;
+}
+
+.kopfleiste a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.kopfleiste nav a:hover {
+    text-decoration: underline;
+}
+
+.kopfleiste .knopf-klein {
+    background: transparent;
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.6);
 }
 
 .kopfleiste nav {
@@ -109,13 +134,16 @@ h2 {
     font-weight: bold;
     font-size: 1.15rem;
     text-decoration: none;
-    color: var(--text);
 }
 
+/* Weißer Inhaltsbereich in der Mitte der Seite */
 .inhalt {
     max-width: 900px;
-    margin: 0 auto;
-    padding: 1rem 1rem 3rem;
+    margin: 1.5rem auto;
+    padding: 1.25rem 2rem 2rem;
+    background: var(--hintergrund);
+    border: 1px solid var(--rand);
+    border-radius: var(--radius);
 }
 
 .fussleiste {
@@ -123,7 +151,6 @@ h2 {
     padding: 1rem;
     font-size: 0.85rem;
     color: var(--leise);
-    border-top: 1px solid var(--rand);
 }
 
 .leise {
@@ -143,7 +170,7 @@ h2 {
     text-decoration: none;
     cursor: pointer;
     border: 1px solid var(--akzent);
-    border-radius: 3px;
+    border-radius: var(--radius);
 }
 
 .knopf {
@@ -194,7 +221,7 @@ select {
     color: var(--text);
     background: var(--hintergrund);
     border: 1px solid var(--rand);
-    border-radius: 3px;
+    border-radius: var(--radius);
 }
 
 textarea {
@@ -213,6 +240,8 @@ label > textarea {
 
 .box {
     border: 1px solid var(--rand);
+    border-radius: var(--radius);
+    background: var(--flaeche);
     padding: 1rem;
     margin: 1rem 0;
 }
@@ -238,9 +267,10 @@ label > textarea {
 
 .fortschritt {
     display: block;
-    height: 10px;
-    border: 1px solid var(--rand);
-    background: var(--flaeche);
+    height: 8px;
+    border-radius: 4px;
+    background: var(--rand);
+    overflow: hidden;
 }
 
 .fortschritt > span {
@@ -255,12 +285,36 @@ label > textarea {
     max-width: 450px;
 }
 
+.setliste {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 0.75rem;
+}
+
 .setliste li {
-    margin-bottom: 0.3rem;
+    padding: 0.75rem 1rem;
+    background: var(--flaeche);
+    border: 1px solid var(--rand);
+    border-left: 4px solid var(--akzent);
+    border-radius: var(--radius);
+}
+
+.setliste a {
+    display: block;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.setliste a:hover {
+    text-decoration: underline;
 }
 
 .setliste .leise {
-    margin-left: 0.5rem;
+    display: block;
+    margin: 0.2rem 0 0.4rem;
     font-size: 0.9rem;
 }
 
@@ -287,6 +341,15 @@ label > textarea {
     border-bottom: 1px solid var(--rand);
     text-align: left;
     vertical-align: top;
+}
+
+.kartentabelle th {
+    background: var(--flaeche);
+    font-size: 0.9rem;
+}
+
+.kartentabelle tbody tr:hover {
+    background: var(--flaeche);
 }
 
 .kartentabelle .begriff {
@@ -400,22 +463,26 @@ label > textarea {
     justify-content: center;
     padding: 1.5rem;
     text-align: center;
-    font-size: 1.4rem;
+    font-size: 1.5rem;
     background: var(--hintergrund);
-    border: 1px solid var(--rand);
+    border: 2px solid var(--rand);
+    border-radius: 6px;
     backface-visibility: hidden;
 }
 
 .karte-hinten {
     transform: rotateY(180deg);
-    background: var(--flaeche);
+    background: var(--akzent-hell);
+    border-color: var(--akzent);
 }
 
 /* Fragen (Lernen, Schreiben, Test) */
 
 .frage-karte {
     border: 1px solid var(--rand);
-    padding: 1rem;
+    border-radius: var(--radius);
+    background: var(--flaeche);
+    padding: 1rem 1.25rem;
     margin-bottom: 1rem;
 }
 
@@ -443,7 +510,7 @@ label > textarea {
     color: var(--text);
     background: var(--hintergrund);
     border: 1px solid var(--rand);
-    border-radius: 3px;
+    border-radius: var(--radius);
     cursor: pointer;
 }
 
@@ -521,6 +588,7 @@ label.option {
 
 .kachel {
     min-height: 90px;
+    border-radius: var(--radius);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -554,6 +622,13 @@ label.option {
 /* ---------- Kleine Bildschirme (Handy) ---------- */
 
 @media (max-width: 600px) {
+    .inhalt {
+        margin: 0;
+        padding: 1rem;
+        border: none;
+        border-radius: 0;
+    }
+
     .raster-2,
     .optionen {
         grid-template-columns: 1fr;
