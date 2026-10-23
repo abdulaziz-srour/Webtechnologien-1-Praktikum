@@ -13,6 +13,7 @@ Ausführlich: siehe [INSTALLATION.md](INSTALLATION.md).
 - **Karteikarten:** umdrehen mit Animation, blättern, mischen, Seiten tauschen, vorlesen, automatisch abspielen
 - **Lernen:** erst Multiple Choice, dann Schreiben; falsche Karten kommen wieder, bis alle sitzen
 - **Schreiben:** Antwort eintippen, tolerant bei Groß-/Kleinschreibung und kleinen Tippfehlern; Runden mit den falschen Karten
+- **Test:** gemischt aus Multiple Choice, Wahr/Falsch und Freitext, mit Punktzahl; falsche Antwortmöglichkeiten stammen aus anderen Karten des Sets
 
 ## Aufbau
 
