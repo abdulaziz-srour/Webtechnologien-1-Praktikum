@@ -115,6 +115,9 @@ Fragen auch gerne in den Übungen, wenn wenig los ist.
 
 ## Arbeitsregeln für Claude in diesem Repo
 
+- **Niemals etwas ins GitHub-Repository schreiben, ohne Abdulaziz vorher zu fragen.** Das gilt für
+  Commits/Pushes, neue Branches, Pull Requests, Kommentare, Issues und jede andere Änderung auf GitHub.
+  Änderungen erst lokal vorbereiten, zeigen und nur nach ausdrücklicher Zustimmung pushen.
 - Kommunikation und Doku auf **Deutsch**.
 - Nur **HTML, CSS, Vanilla-JavaScript und PHP 8.5** als Hauptsprachen. Kein TypeScript, kein Build-Schritt
   (kein npm-Bundling), damit das Projekt mit `php -S` direkt läuft.
