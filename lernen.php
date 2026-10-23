@@ -27,18 +27,17 @@ $titel = $modi[$modus]['name'] . ' · ' . $set['name'];
 require __DIR__ . '/inc/kopf.php';
 ?>
 
-<section class="kopfbereich">
-    <div>
-        <p><a href="set.php?id=<?= e($id) ?>">← <?= e($set['name']) ?></a></p>
-        <h1><?= $modi[$modus]['symbol'] ?> <?= $modi[$modus]['name'] ?></h1>
-    </div>
-    <nav class="modus-wechsel">
-        <?php foreach ($modi as $schluessel => $m): ?>
-            <a href="lernen.php?id=<?= e($id) ?>&amp;modus=<?= $schluessel ?><?= $nur_sterne ? '&amp;sterne=1' : '' ?>"
-               class="<?= $schluessel === $modus ? 'aktiv' : '' ?>" title="<?= $m['name'] ?>"><?= $m['symbol'] ?></a>
-        <?php endforeach; ?>
-    </nav>
-</section>
+<p><a href="set.php?id=<?= e($id) ?>">Zurück zu „<?= e($set['name']) ?>“</a></p>
+<h1><?= $modi[$modus]['name'] ?></h1>
+
+<!-- Zwischen den Modi wechseln -->
+<nav class="modus-wechsel">
+    Modus:
+    <?php foreach ($modi as $schluessel => $m): ?>
+        <a href="lernen.php?id=<?= e($id) ?>&amp;modus=<?= $schluessel ?><?= $nur_sterne ? '&amp;sterne=1' : '' ?>"
+           class="<?= $schluessel === $modus ? 'aktiv' : '' ?>"><?= $m['name'] ?></a>
+    <?php endforeach; ?>
+</nav>
 
 <!-- Diese Daten liest js/gemeinsam.js aus, um das richtige Set zu laden. -->
 <div id="lernbereich" data-set="<?= e($id) ?>" data-nur-sterne="<?= $nur_sterne ? '1' : '0' ?>">

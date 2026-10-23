@@ -32,55 +32,51 @@ $titel = 'Meine Sets';
 require __DIR__ . '/inc/kopf.php';
 ?>
 
-<section class="kopfbereich">
-    <h1>Meine Lernsets</h1>
-    <form class="suche" method="get" action="index.php">
-        <input type="search" name="suche" value="<?= e($suche) ?>" placeholder="Alle Karten durchsuchen …" aria-label="Suche">
-        <button type="submit" class="knopf">Suchen</button>
-    </form>
-</section>
+<h1>Meine Lernsets</h1>
+<form class="suche" method="get" action="index.php">
+    <input type="search" name="suche" value="<?= e($suche) ?>" placeholder="Alle Karten durchsuchen …" aria-label="Suche">
+    <button type="submit" class="knopf">Suchen</button>
+</form>
 
 <?php if ($suche !== ''): ?>
-    <section class="box">
+    <section>
         <h2><?= count($treffer) ?> Treffer für „<?= e($suche) ?>“</h2>
         <?php if (count($treffer) === 0): ?>
             <p class="leise">Keine Karte gefunden.</p>
         <?php else: ?>
-            <ul class="kartenliste">
+            <table class="kartentabelle">
+                <tr><th>Begriff</th><th>Definition</th><th>Set</th></tr>
                 <?php foreach ($treffer as $t): ?>
-                    <li>
-                        <span class="begriff"><?= e($t['karte']['begriff']) ?></span>
-                        <span class="definition"><?= e($t['karte']['definition']) ?></span>
-                        <a class="leise" href="set.php?id=<?= e($t['set']['id']) ?>"><?= e($t['set']['name']) ?></a>
-                    </li>
+                    <tr>
+                        <td class="begriff"><?= e($t['karte']['begriff']) ?></td>
+                        <td><?= e($t['karte']['definition']) ?></td>
+                        <td><a href="set.php?id=<?= e($t['set']['id']) ?>"><?= e($t['set']['name']) ?></a></td>
+                    </tr>
                 <?php endforeach; ?>
-            </ul>
+            </table>
         <?php endif; ?>
         <p><a href="index.php">Suche zurücksetzen</a></p>
     </section>
 <?php endif; ?>
 
 <?php if (count($sets) === 0): ?>
-    <section class="box leer">
+    <section>
         <p>Noch keine Lernsets vorhanden.</p>
         <a class="knopf" href="bearbeiten.php">Erstes Set anlegen</a>
     </section>
 <?php endif; ?>
 
 <?php foreach ($nach_fach as $fach => $sets_im_fach): ?>
-    <section class="ordner">
-        <h2>📁 <?= e($fach) ?></h2>
-        <div class="set-raster">
-            <?php foreach ($sets_im_fach as $set): ?>
-                <?php $stat = statistik($set); ?>
-                <a class="set-kachel" href="set.php?id=<?= e($set['id']) ?>">
-                    <strong><?= e($set['name']) ?></strong>
-                    <span class="leise"><?= $stat['gesamt'] ?> Karten · <?= $stat['prozent'] ?> % gekonnt</span>
-                    <span class="fortschritt"><span style="width: <?= $stat['prozent'] ?>%"></span></span>
-                </a>
-            <?php endforeach; ?>
-        </div>
-    </section>
+    <h2><?= e($fach) ?></h2>
+    <ul class="setliste">
+        <?php foreach ($sets_im_fach as $set): ?>
+            <?php $stat = statistik($set); ?>
+            <li>
+                <a href="set.php?id=<?= e($set['id']) ?>"><?= e($set['name']) ?></a>
+                <span class="leise"><?= $stat['gesamt'] ?> Karten, <?= $stat['prozent'] ?> % gekonnt</span>
+            </li>
+        <?php endforeach; ?>
+    </ul>
 <?php endforeach; ?>
 
 <?php require __DIR__ . '/inc/fuss.php'; ?>

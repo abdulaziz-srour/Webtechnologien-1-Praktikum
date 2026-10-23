@@ -1,62 +1,56 @@
 /*
- * style.css – Aussehen der ganzen Lernkarten-App.
+ * style.css – Aussehen der Lernkarten-App.
+ * Bewusst schlicht gehalten: wenige Farben, einfache Rahmen, keine Schatten.
  *
  * Aufbau:
  *   1. Farben (CSS-Variablen) für hell und dunkel
- *   2. Grundlayout (Kopf, Inhalt, Fuß)
- *   3. Knöpfe, Formulare, Boxen
- *   4. Startseite und Set-Ansicht
- *   5. Lernmodi (Karteikarten mit Umdreh-Animation, Lernen, Schreiben, Test, Zuordnen)
+ *   2. Grundlayout
+ *   3. Knöpfe, Formulare, Tabellen
+ *   4. Lernmodi (Karteikarte mit Umdreh-Animation, Fragen, Zuordnen)
  */
 
 /* ---------- 1. Farben ---------- */
 
 :root {
-    --hintergrund: #f4f6fb;
-    --flaeche: #ffffff;
-    --text: #1f2433;
-    --leise: #677089;
-    --rand: #dde2ee;
-    --akzent: #4255ff;          /* Hauptfarbe (Knöpfe, Links) */
-    --akzent-text: #ffffff;
-    --akzent-hell: #e8ebff;
-    --richtig: #18a058;
-    --richtig-hell: #e2f6eb;
-    --falsch: #d63b3b;
-    --falsch-hell: #fde8e8;
-    --stern: #f5b400;
-    --schatten: 0 2px 10px rgba(30, 40, 80, 0.08);
-    --radius: 12px;
+    --hintergrund: #ffffff;
+    --flaeche: #f3f3f3;
+    --text: #222222;
+    --leise: #666666;
+    --rand: #cccccc;
+    --akzent: #2f5fa7;
+    --akzent-hell: #e3ebf7;
+    --richtig: #2e7d32;
+    --richtig-hell: #e6f4e7;
+    --falsch: #c62828;
+    --falsch-hell: #fbe9e9;
+    --stern: #e0a800;
 }
 
-/* Dunkle Farben: wenn der Nutzer es gewählt hat ODER das System dunkel ist (und nicht "hell" gewählt wurde). */
+/* Dunkle Farben: wenn man sie selbst gewählt hat ... */
 :root[data-thema="dunkel"] {
-    --hintergrund: #10131c;
-    --flaeche: #1b2030;
-    --text: #e8ebf3;
-    --leise: #98a0b8;
-    --rand: #2e3548;
-    --akzent: #7c8bff;
-    --akzent-text: #10131c;
-    --akzent-hell: #262d4d;
-    --richtig-hell: #15362a;
-    --falsch-hell: #3d1d22;
-    --schatten: 0 2px 10px rgba(0, 0, 0, 0.4);
+    --hintergrund: #1e1e1e;
+    --flaeche: #2a2a2a;
+    --text: #e6e6e6;
+    --leise: #a0a0a0;
+    --rand: #444444;
+    --akzent: #6b9be0;
+    --akzent-hell: #2b3646;
+    --richtig-hell: #213324;
+    --falsch-hell: #3a2424;
 }
 
+/* ... oder wenn das Betriebssystem dunkel eingestellt ist (und nicht "hell" gewählt wurde). */
 @media (prefers-color-scheme: dark) {
     :root:not([data-thema="hell"]) {
-        --hintergrund: #10131c;
-        --flaeche: #1b2030;
-        --text: #e8ebf3;
-        --leise: #98a0b8;
-        --rand: #2e3548;
-        --akzent: #7c8bff;
-        --akzent-text: #10131c;
-        --akzent-hell: #262d4d;
-        --richtig-hell: #15362a;
-        --falsch-hell: #3d1d22;
-        --schatten: 0 2px 10px rgba(0, 0, 0, 0.4);
+        --hintergrund: #1e1e1e;
+        --flaeche: #2a2a2a;
+        --text: #e6e6e6;
+        --leise: #a0a0a0;
+        --rand: #444444;
+        --akzent: #6b9be0;
+        --akzent-hell: #2b3646;
+        --richtig-hell: #213324;
+        --falsch-hell: #3a2424;
     }
 }
 
@@ -74,32 +68,34 @@
 
 body {
     margin: 0;
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
     line-height: 1.5;
     background: var(--hintergrund);
     color: var(--text);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
 }
 
 a {
     color: var(--akzent);
 }
 
-h1, h2 {
-    line-height: 1.2;
-    margin: 0 0 0.5rem;
+h1 {
+    font-size: 1.6rem;
+    margin: 0.5rem 0;
+}
+
+h2 {
+    font-size: 1.2rem;
+    margin: 1.5rem 0 0.5rem;
 }
 
 .kopfleiste {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 1rem;
     flex-wrap: wrap;
-    padding: 0.75rem 1.25rem;
-    background: var(--flaeche);
+    gap: 0.5rem;
+    padding: 0.6rem 1rem;
     border-bottom: 1px solid var(--rand);
 }
 
@@ -109,24 +105,17 @@ h1, h2 {
     gap: 1rem;
 }
 
-.kopfleiste nav a {
-    text-decoration: none;
-    font-weight: 500;
-}
-
 .logo {
-    font-weight: 700;
-    font-size: 1.2rem;
+    font-weight: bold;
+    font-size: 1.15rem;
     text-decoration: none;
-    color: var(--text) !important;
+    color: var(--text);
 }
 
 .inhalt {
-    flex: 1;
-    width: 100%;
-    max-width: 960px;
+    max-width: 900px;
     margin: 0 auto;
-    padding: 1.5rem 1rem 3rem;
+    padding: 1rem 1rem 3rem;
 }
 
 .fussleiste {
@@ -134,75 +123,59 @@ h1, h2 {
     padding: 1rem;
     font-size: 0.85rem;
     color: var(--leise);
+    border-top: 1px solid var(--rand);
 }
 
 .leise {
     color: var(--leise);
-    font-size: 0.9rem;
 }
 
 .mitte {
     text-align: center;
 }
 
-/* ---------- 3. Knöpfe, Formulare, Boxen ---------- */
+/* ---------- 3. Knöpfe, Formulare, Tabellen ---------- */
 
 .knopf,
 .knopf-klein {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.4rem;
-    border: 1px solid transparent;
-    border-radius: 8px;
+    display: inline-block;
     font: inherit;
-    font-weight: 600;
-    cursor: pointer;
     text-decoration: none;
-    transition: transform 0.1s, background 0.2s;
+    cursor: pointer;
+    border: 1px solid var(--akzent);
+    border-radius: 3px;
 }
 
 .knopf {
-    padding: 0.6rem 1.1rem;
+    padding: 0.4rem 0.9rem;
     background: var(--akzent);
-    color: var(--akzent-text);
+    color: #ffffff;
 }
 
 .knopf:hover {
-    filter: brightness(1.08);
-}
-
-.knopf:active,
-.knopf-klein:active {
-    transform: scale(0.97);
+    opacity: 0.9;
 }
 
 .knopf.zweitrangig {
-    background: var(--flaeche);
-    color: var(--text);
-    border-color: var(--rand);
+    background: var(--hintergrund);
+    color: var(--akzent);
 }
 
 .knopf.gefahr {
     background: var(--falsch);
-    color: #fff;
-}
-
-.knopf:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
+    border-color: var(--falsch);
 }
 
 .knopf-klein {
-    padding: 0.35rem 0.7rem;
-    background: var(--flaeche);
+    padding: 0.15rem 0.5rem;
+    font-size: 0.9rem;
+    background: var(--hintergrund);
     color: var(--text);
     border-color: var(--rand);
-    font-size: 0.9rem;
 }
 
 .knopf-klein:hover {
-    background: var(--akzent-hell);
+    background: var(--flaeche);
 }
 
 .stern.aktiv {
@@ -216,20 +189,12 @@ input[type="number"],
 textarea,
 select {
     width: 100%;
-    padding: 0.55rem 0.7rem;
+    padding: 0.4rem;
     font: inherit;
     color: var(--text);
     background: var(--hintergrund);
     border: 1px solid var(--rand);
-    border-radius: 8px;
-}
-
-input:focus,
-textarea:focus,
-select:focus,
-.karteikarte:focus-visible {
-    outline: 2px solid var(--akzent);
-    outline-offset: 1px;
+    border-radius: 3px;
 }
 
 textarea {
@@ -238,321 +203,184 @@ textarea {
 
 label {
     display: block;
-    font-weight: 500;
 }
 
 label > input,
 label > select,
 label > textarea {
-    margin-top: 0.3rem;
+    margin-top: 0.2rem;
 }
 
 .box {
-    background: var(--flaeche);
     border: 1px solid var(--rand);
-    border-radius: var(--radius);
-    padding: 1.25rem;
-    margin-bottom: 1.25rem;
-    box-shadow: var(--schatten);
-}
-
-.raster-2 {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-}
-
-.raster-2 .breit {
-    grid-column: 1 / -1;
+    padding: 1rem;
+    margin: 1rem 0;
 }
 
 .aktionen {
     display: flex;
-    gap: 0.5rem;
     flex-wrap: wrap;
+    gap: 0.5rem;
     align-items: center;
-    margin-top: 1rem;
+    margin: 0.75rem 0;
 }
 
 .aktionen form {
     margin: 0;
 }
 
-.meldung {
-    padding: 0.75rem 1rem;
-    border-radius: 8px;
-}
-
 .meldung.fehler {
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--falsch);
     background: var(--falsch-hell);
     color: var(--falsch);
 }
 
 .fortschritt {
     display: block;
-    height: 8px;
-    background: var(--rand);
-    border-radius: 99px;
-    overflow: hidden;
+    height: 10px;
+    border: 1px solid var(--rand);
+    background: var(--flaeche);
 }
 
 .fortschritt > span {
     display: block;
     height: 100%;
     background: var(--richtig);
-    border-radius: 99px;
-    transition: width 0.4s ease;
-}
-
-/* ---------- 4. Startseite und Set-Ansicht ---------- */
-
-.kopfbereich {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 1rem;
-    flex-wrap: wrap;
-    margin-bottom: 1.5rem;
-}
-
-.kopfbereich p {
-    margin: 0 0 0.25rem;
 }
 
 .suche {
     display: flex;
     gap: 0.5rem;
-    min-width: min(100%, 360px);
+    max-width: 450px;
 }
 
-.ordner {
-    margin-bottom: 2rem;
+.setliste li {
+    margin-bottom: 0.3rem;
 }
 
-.set-raster {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 1rem;
-}
-
-.set-kachel {
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-    padding: 1.1rem;
-    background: var(--flaeche);
-    border: 1px solid var(--rand);
-    border-radius: var(--radius);
-    color: var(--text);
-    text-decoration: none;
-    box-shadow: var(--schatten);
-    transition: transform 0.15s, border-color 0.15s;
-}
-
-.set-kachel:hover {
-    transform: translateY(-3px);
-    border-color: var(--akzent);
-}
-
-.leer {
-    text-align: center;
-}
-
-.statistik {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.5rem;
-    align-items: center;
-}
-
-.statistik div {
-    display: flex;
-    flex-direction: column;
-}
-
-.statistik strong {
-    font-size: 1.6rem;
-}
-
-.statistik span {
-    color: var(--leise);
-    font-size: 0.85rem;
-}
-
-.statistik .fortschritt.gross {
-    flex-basis: 100%;
-    height: 12px;
-}
-
-.modi-raster {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 0.75rem;
-}
-
-.modus-kachel {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.2rem;
-    padding: 1rem;
-    text-align: left;
-    font: inherit;
-    color: var(--text);
-    background: var(--flaeche);
-    border: 1px solid var(--rand);
-    border-bottom: 4px solid var(--akzent);
-    border-radius: var(--radius);
-    cursor: pointer;
-    box-shadow: var(--schatten);
-    transition: transform 0.15s;
-}
-
-.modus-kachel:hover {
-    transform: translateY(-3px);
-}
-
-.modus-kachel .symbol {
-    font-size: 1.6rem;
+.setliste .leise {
+    margin-left: 0.5rem;
+    font-size: 0.9rem;
 }
 
 .schalter {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    margin: 1rem 0 1.5rem;
-    font-weight: 400;
+    gap: 0.4rem;
+    white-space: nowrap;
 }
 
-.kartenliste {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+.schalter select {
+    width: auto;
+    margin-top: 0;
 }
 
-.kartenliste li {
-    display: grid;
-    grid-template-columns: 1fr 2fr auto;
-    gap: 1rem;
-    align-items: center;
-    padding: 0.75rem 0;
+.kartentabelle {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.kartentabelle th,
+.kartentabelle td {
+    padding: 0.4rem 0.5rem;
     border-bottom: 1px solid var(--rand);
+    text-align: left;
+    vertical-align: top;
 }
 
-.kartenliste li:last-child {
-    border-bottom: none;
+.kartentabelle .begriff {
+    font-weight: bold;
 }
 
-.kartenliste li.gekonnt .begriff::before {
-    content: "✓ ";
+.kartentabelle tr.gekonnt .begriff {
     color: var(--richtig);
 }
 
-.kartenliste .begriff {
-    font-weight: 600;
-}
-
-.kartenliste .knoepfe {
-    display: flex;
-    align-items: center;
-    gap: 0.3rem;
-}
-
-.kartenliste .zaehlung {
-    margin-right: 0.4rem;
+.kartentabelle .knoepfe {
     white-space: nowrap;
 }
 
 /* Editor */
 
+.raster-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+}
+
+.raster-2 .breit {
+    grid-column: 1 / -1;
+}
+
 .karten-zeile {
     display: grid;
     grid-template-columns: 2rem 1fr 1fr auto;
-    gap: 0.75rem;
+    gap: 0.5rem;
     align-items: start;
-    padding: 0.75rem;
     margin-bottom: 0.5rem;
-    background: var(--flaeche);
-    border: 1px solid var(--rand);
-    border-radius: var(--radius);
 }
 
 .karten-zeile .nummer {
-    padding-top: 0.6rem;
+    padding-top: 0.4rem;
     color: var(--leise);
-    font-weight: 600;
-}
-
-.import {
-    margin-top: 1.25rem;
 }
 
 .import summary {
     cursor: pointer;
-    font-weight: 600;
 }
 
 .import label {
-    margin: 0.75rem 0;
-    max-width: 320px;
+    margin: 0.5rem 0;
+    max-width: 300px;
 }
 
-/* ---------- 5. Lernmodi ---------- */
+/* ---------- 4. Lernmodi ---------- */
 
 .modus-wechsel {
-    display: flex;
-    gap: 0.3rem;
+    margin-bottom: 1rem;
 }
 
 .modus-wechsel a {
-    padding: 0.4rem 0.6rem;
-    font-size: 1.3rem;
-    text-decoration: none;
-    border: 1px solid var(--rand);
-    border-radius: 8px;
-    background: var(--flaeche);
+    margin-right: 0.6rem;
 }
 
 .modus-wechsel a.aktiv {
-    border-color: var(--akzent);
-    background: var(--akzent-hell);
+    font-weight: bold;
+    color: var(--text);
+    text-decoration: none;
 }
 
 .modus {
-    max-width: 720px;
-    margin: 0 auto;
+    max-width: 700px;
 }
 
 .zaehler {
-    text-align: center;
-    font-weight: 600;
     color: var(--leise);
 }
 
 .steuerung {
     display: flex;
-    justify-content: center;
     flex-wrap: wrap;
     gap: 0.5rem;
-    margin: 1rem 0;
+    margin: 0.75rem 0;
 }
 
-/* Karteikarte mit 3D-Umdreh-Animation:
+/* Karteikarte mit Umdreh-Animation:
    .karte-innen dreht sich um die Y-Achse, die Rückseite ist von Anfang an um 180° gedreht
    und durch backface-visibility nur sichtbar, wenn sie nach vorne zeigt. */
 
 .karteikarte {
-    perspective: 1200px;
-    height: 320px;
+    perspective: 1000px;
+    height: 280px;
     cursor: pointer;
-    border-radius: var(--radius);
 }
 
 .karte-innen {
     position: relative;
     width: 100%;
     height: 100%;
-    transition: transform 0.6s ease;
+    transition: transform 0.5s;
     transform-style: preserve-3d;
 }
 
@@ -570,61 +398,52 @@ label > textarea {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 2rem;
+    padding: 1.5rem;
     text-align: center;
-    font-size: 1.6rem;
-    background: var(--flaeche);
+    font-size: 1.4rem;
+    background: var(--hintergrund);
     border: 1px solid var(--rand);
-    border-radius: var(--radius);
-    box-shadow: var(--schatten);
     backface-visibility: hidden;
-    overflow-wrap: anywhere;
 }
 
 .karte-hinten {
     transform: rotateY(180deg);
-    background: var(--akzent-hell);
+    background: var(--flaeche);
 }
 
-/* Frage-Karten (Lernen, Schreiben, Test) */
+/* Fragen (Lernen, Schreiben, Test) */
 
 .frage-karte {
-    background: var(--flaeche);
     border: 1px solid var(--rand);
-    border-radius: var(--radius);
-    padding: 1.5rem;
+    padding: 1rem;
     margin-bottom: 1rem;
-    box-shadow: var(--schatten);
 }
 
 .frage-karte .art {
-    font-size: 0.8rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+    margin: 0;
+    font-size: 0.85rem;
     color: var(--leise);
 }
 
 .frage-text {
-    font-size: 1.4rem;
-    margin: 0.5rem 0 1.25rem;
-    overflow-wrap: anywhere;
+    font-size: 1.2rem;
+    margin: 0.5rem 0 1rem;
 }
 
 .optionen {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 0.75rem;
+    gap: 0.5rem;
 }
 
 .option {
-    padding: 0.9rem 1rem;
+    padding: 0.6rem;
     text-align: left;
     font: inherit;
     color: var(--text);
     background: var(--hintergrund);
-    border: 2px solid var(--rand);
-    border-radius: 10px;
+    border: 1px solid var(--rand);
+    border-radius: 3px;
     cursor: pointer;
 }
 
@@ -632,31 +451,22 @@ label > textarea {
     border-color: var(--akzent);
 }
 
+label.option {
+    display: flex;
+    gap: 0.4rem;
+    align-items: center;
+}
+
 .option.richtig,
-.feedback.richtig,
-.ergebnis-zeile.richtig {
+.feedback.richtig {
     border-color: var(--richtig);
     background: var(--richtig-hell);
 }
 
 .option.falsch,
-.feedback.falsch,
-.ergebnis-zeile.falsch {
+.feedback.falsch {
     border-color: var(--falsch);
     background: var(--falsch-hell);
-}
-
-/* Option im Test, die man angeklickt hat (Radio-Knopf steckt darin) */
-label.option {
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
-    font-weight: 400;
-}
-
-label.option:has(input:checked) {
-    border-color: var(--akzent);
-    background: var(--akzent-hell);
 }
 
 .eingabe-zeile {
@@ -665,89 +475,64 @@ label.option:has(input:checked) {
 }
 
 .feedback {
-    margin-top: 1rem;
-    padding: 0.9rem 1rem;
-    border: 2px solid transparent;
-    border-radius: 10px;
+    margin-top: 0.75rem;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--rand);
 }
 
 .feedback p {
     margin: 0.25rem 0;
 }
 
-.runden-info {
-    text-align: center;
-}
-
-.ergebnis {
-    text-align: center;
-}
-
 .ergebnis .gross {
-    font-size: 3rem;
-    font-weight: 700;
+    font-size: 2rem;
+    font-weight: bold;
     margin: 0.5rem 0;
-}
-
-.ergebnis-zeile {
-    padding: 0.75rem 1rem;
-    margin: 0.5rem 0;
-    border: 2px solid var(--rand);
-    border-radius: 10px;
-    text-align: left;
 }
 
 .test-einstellungen fieldset {
     border: 1px solid var(--rand);
-    border-radius: 8px;
-    margin: 1rem 0;
+    margin: 0.75rem 0;
 }
 
 .test-einstellungen fieldset label {
     display: inline-flex;
-    gap: 0.4rem;
-    margin-right: 1.25rem;
-    font-weight: 400;
+    gap: 0.3rem;
+    margin-right: 1rem;
 }
 
-/* Zuordnen: Kacheln, die man aufeinander zieht */
+/* Zuordnen */
 
 .zuordnen-kopf {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    font-weight: 600;
 }
 
 .timer {
-    font-size: 1.6rem;
-    font-variant-numeric: tabular-nums;
+    font-weight: bold;
 }
 
 .zuordnen-raster {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 0.75rem;
-    margin-top: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 0.5rem;
+    margin-top: 0.75rem;
 }
 
 .kachel {
-    min-height: 110px;
+    min-height: 90px;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0.75rem;
+    padding: 0.5rem;
     text-align: center;
-    background: var(--flaeche);
-    border: 2px solid var(--rand);
-    border-radius: 10px;
-    box-shadow: var(--schatten);
+    font-size: 0.95rem;
+    background: var(--hintergrund);
+    border: 1px solid var(--rand);
     cursor: grab;
     user-select: none;
-    font-size: 0.95rem;
     overflow-wrap: break-word;
     hyphens: auto;
-    transition: opacity 0.3s, transform 0.3s;
 }
 
 .kachel.ausgewaehlt,
@@ -759,47 +544,19 @@ label.option:has(input:checked) {
 .kachel.falsch {
     border-color: var(--falsch);
     background: var(--falsch-hell);
-    animation: wackeln 0.4s;
 }
 
+/* Gefundene Paare bleiben als leerer Platz stehen, damit nichts verrutscht. */
 .kachel.fertig {
-    opacity: 0;
-    transform: scale(0.8);
-    pointer-events: none;
-}
-
-@keyframes wackeln {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-6px); }
-    75% { transform: translateX(6px); }
-}
-
-/* Kleine Erfolgs-Animation */
-.erfolg {
-    animation: huepfen 0.6s ease;
-}
-
-@keyframes huepfen {
-    0% { transform: scale(0.6); opacity: 0; }
-    60% { transform: scale(1.1); opacity: 1; }
-    100% { transform: scale(1); }
+    visibility: hidden;
 }
 
 /* ---------- Kleine Bildschirme (Handy) ---------- */
 
-@media (max-width: 640px) {
+@media (max-width: 600px) {
     .raster-2,
     .optionen {
         grid-template-columns: 1fr;
-    }
-
-    .kartenliste li {
-        grid-template-columns: 1fr auto;
-    }
-
-    .kartenliste .definition {
-        grid-column: 1 / -1;
-        order: 3;
     }
 
     .karten-zeile {
@@ -811,10 +568,6 @@ label.option:has(input:checked) {
     }
 
     .karteikarte {
-        height: 260px;
-    }
-
-    .karte-seite {
-        font-size: 1.25rem;
+        height: 220px;
     }
 }

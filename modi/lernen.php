@@ -21,7 +21,7 @@
         <p class="art" id="ln-art"></p>
         <p class="frage-text">
             <span id="ln-frage-text"></span>
-            <button type="button" class="knopf-klein" id="ln-vorlesen" title="Vorlesen">🔊</button>
+            <button type="button" class="knopf-klein" id="ln-vorlesen" >Vorlesen</button>
         </p>
         <div class="optionen" id="ln-optionen"></div>
         <form class="eingabe-zeile" id="ln-formular" autocomplete="off">
@@ -38,7 +38,6 @@
     </div>
 
     <div class="box ergebnis" id="ln-ende" hidden>
-        <p class="gross erfolg">🎉</p>
         <h2>Geschafft!</h2>
         <p>Du hast alle <span id="ln-ende-anzahl"></span> Karten gelernt.</p>
         <div class="aktionen" style="justify-content: center">

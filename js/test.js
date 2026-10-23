@@ -55,7 +55,7 @@ function zeigeTest() {
             });
             html += '</div>';
         } else if (frage.typ === 'wf') {
-            html += '<p class="frage-text">' + escapeHtml(frage.frage) + '<br><span class="leise">→</span> '
+            html += '<p class="frage-text">' + escapeHtml(frage.frage) + '<br><span class="leise">gehört zu:</span> '
                   + escapeHtml(frage.gezeigt) + '</p><div class="optionen">'
                   + '<label class="option"><input type="radio" name="f' + nr + '" value="wahr"> Wahr</label>'
                   + '<label class="option"><input type="radio" name="f' + nr + '" value="falsch"> Falsch</label></div>';
@@ -100,7 +100,7 @@ function werteTestAus() {
         const feedback = block.querySelector('.feedback');
         feedback.hidden = false;
         feedback.className = 'feedback ' + (richtig ? 'richtig' : 'falsch');
-        let text = richtig ? '✓ Richtig' : '✗ Falsch';
+        let text = richtig ? 'Richtig' : 'Falsch';
         if (frage.typ === 'wf' && !frage.wahr) {
             text += ' – richtig wäre: ' + frage.loesung;
         } else if (!richtig) {
@@ -113,9 +113,9 @@ function werteTestAus() {
 
     const prozent = Math.round(punkte / ts.fragen.length * 100);
     document.getElementById('ts-prozent').textContent = prozent + ' %';
-    document.getElementById('ts-prozent').className = 'gross erfolg';
+    document.getElementById('ts-prozent').className = 'gross';
     document.getElementById('ts-punkte').textContent = punkte + ' von ' + ts.fragen.length + ' Fragen richtig'
-        + (prozent === 100 ? ' – perfekt! 🏆' : prozent >= 70 ? ' – gut gemacht! 👍' : ' – weiter üben! 💪');
+        + '';
     document.getElementById('ts-ergebnis').hidden = false;
     document.getElementById('ts-abgeben').hidden = true;
     window.scrollTo({ top: 0, behavior: 'smooth' });

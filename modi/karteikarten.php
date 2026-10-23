@@ -11,16 +11,16 @@
     </div>
 
     <div class="steuerung">
-        <button type="button" class="knopf zweitrangig" id="kk-zurueck" title="Pfeil links">← Zurück</button>
+        <button type="button" class="knopf zweitrangig" id="kk-zurueck" title="Pfeil links">Zurück</button>
         <button type="button" class="knopf" id="kk-umdrehen" title="Leertaste">Umdrehen</button>
-        <button type="button" class="knopf zweitrangig" id="kk-weiter" title="Pfeil rechts">Weiter →</button>
+        <button type="button" class="knopf zweitrangig" id="kk-weiter" title="Pfeil rechts">Weiter</button>
     </div>
     <div class="steuerung">
-        <button type="button" class="knopf-klein" id="kk-mischen">🔀 Mischen</button>
-        <button type="button" class="knopf-klein" id="kk-tauschen">⇄ Seiten tauschen</button>
-        <button type="button" class="knopf-klein" id="kk-vorlesen">🔊 Vorlesen</button>
-        <button type="button" class="knopf-klein" id="kk-auto">▶ Automatisch abspielen</button>
-        <button type="button" class="knopf-klein stern" id="kk-stern">★ Markieren</button>
+        <button type="button" class="knopf-klein" id="kk-mischen">Mischen</button>
+        <button type="button" class="knopf-klein" id="kk-tauschen">Seiten tauschen</button>
+        <button type="button" class="knopf-klein" id="kk-vorlesen">Vorlesen</button>
+        <button type="button" class="knopf-klein" id="kk-auto">Automatisch abspielen</button>
+        <button type="button" class="knopf-klein stern" id="kk-stern">Markieren</button>
     </div>
-    <p class="leise mitte">Tastatur: Leertaste = umdrehen, ← / → = blättern</p>
+    <p class="leise mitte">Tastatur: Leertaste = umdrehen, Pfeiltasten = blättern</p>
 </div>

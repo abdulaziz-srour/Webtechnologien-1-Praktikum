@@ -23,11 +23,11 @@ $titel = $titel ?? 'Lernkarten';
 </head>
 <body>
 <header class="kopfleiste">
-    <a class="logo" href="index.php">🗂️ Lernkarten</a>
+    <a class="logo" href="index.php">Lernkarten</a>
     <nav>
         <a href="index.php">Meine Sets</a>
-        <a href="bearbeiten.php">+ Neues Set</a>
-        <button type="button" id="thema-knopf" class="knopf-klein" title="Hell / Dunkel umschalten">🌙</button>
+        <a href="bearbeiten.php">Neues Set</a>
+        <button type="button" id="thema-knopf" class="knopf-klein" >Dunkel</button>
     </nav>
 </header>
 <main class="inhalt">
