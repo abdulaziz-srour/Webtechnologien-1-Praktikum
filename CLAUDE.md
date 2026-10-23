@@ -100,6 +100,55 @@ Code immer wieder durch Ausprobieren im Browser testen.
 - **Workout-Tracker:** Übungen und Trainingspläne speichern, kleine Animationen bei Erfolgen
 - **Plattformer-Browser-Spiel:** Jump-and-Run mit dem Phaser-Framework, Highscores speichern
 
+## Gewähltes Projekt: Lernkarten-App (eigene Quizlet-Alternative)
+
+Abdulaziz baut eine eigene Lernkarten-App nach dem Vorbild von Quizlet, die er selbst für seine
+Klausuren nutzen kann (ohne Abo). Alle Lernmodi greifen auf dieselben Karten zu, jeder Modus ist
+nur eine weitere Ansicht. Daten speichert PHP in **JSON-Dateien** (keine Datenbank nötig),
+gestartet wird mit `php -S localhost:8000`.
+
+### Rolle der vier Sprachen
+
+- **HTML/PHP:** Seiten und Formulare für Sets und Karten
+- **CSS:** Layout, Karten-Umdreh-Animation, ggf. Dark Mode
+- **JavaScript:** Lernmodi, Antwortprüfung, Mischen, Drag-and-Drop, Vorlesen
+- **PHP:** Sets, Karten und Lernfortschritt in JSON-Dateien speichern und laden
+
+### Geplante Funktionen
+
+**Karten verwalten**
+- Lernsets (Stapel) anlegen, bearbeiten, löschen
+- Karten mit Begriff und Definition
+- Import per Copy-Paste (z. B. „Begriff ; Erklärung“ pro Zeile)
+
+**Lernmodi (alle Modi wie bei Quizlet)**
+- **Karteikarten:** umdrehen mit Animation, weiterblättern, mischen, Seiten tauschen
+- **Lernen:** wiederholt nicht gewusste Karten so lange, bis sie sitzen
+- **Schreiben (Freitext):** Antwort eintippen; Prüfung tolerant bei Groß-/Kleinschreibung und kleinen Tippfehlern
+- **Test:** gemischt aus Multiple Choice, Wahr/Falsch und Freitext, mit Punktzahl am Ende.
+  Falsche Antwortmöglichkeiten werden automatisch aus anderen Karten desselben Sets genommen.
+- **Zuordnen:** Begriffe und Definitionen auf Zeit per Drag-and-Drop zusammenführen
+- **Vorlesen:** über die eingebaute Sprachausgabe des Browsers (Web Speech API)
+
+**Extras (wenn Zeit bleibt)**
+- Statistik pro Set (wie viel schon gekonnt)
+- Karten mit Stern markieren und nur diese lernen
+- Suche über alle Karten, Ordner/Fächer, Dark Mode
+
+**Bewusst nicht geplant:** Benutzerkonten/Login, Sets teilen, Klassen/Live-Quiz, KI-generierte Karten, Handy-App.
+
+### Umsetzung in Stufen
+
+Alle Modi zusammen sind eher 20–25 h statt 15 h. Deshalb in Stufen bauen, sodass nach **jeder**
+Stufe eine lauffähige, abgabefähige Version existiert:
+
+1. Sets und Karten anlegen + Karteikarten-Modus (damit ist das Testat bereits abgedeckt)
+2. Lernen und Schreiben
+3. Test (Multiple Choice, Wahr/Falsch, Freitext)
+4. Zuordnen, Vorlesen und Extras
+
+Idee für die sichtbare Code-Änderung im Video: z. B. einen Button-Text oder eine Überschrift ändern und neu laden.
+
 ## Lernziele
 
 - Praxisnahes Verständnis von HTML, CSS, JS, PHP
@@ -125,7 +174,8 @@ Fragen auch gerne in den Übungen, wenn wenig los ist.
   JS sorgt für Interaktivität, CSS für das Layout).
 - Bei jeder Änderung prüfen, ob die **Installationsanleitung** (z. B. `INSTALLATION.md` oder `README.md`)
   noch stimmt, und sie mitpflegen.
-- Lieber klein und lauffähig als groß und kaputt. Der Umfang soll zu ca. 15 h Aufwand passen.
+- Lieber klein und lauffähig als groß und kaputt. Der Umfang laut Modulhandbuch sind ca. 15 h;
+  die Lernkarten-App wird deshalb in Stufen gebaut (siehe oben), jede Stufe muss für sich lauffähig sein.
 - Code einfach und gut kommentiert halten, damit Abdulaziz ihn erklären, ändern und im Video live anpassen kann.
 - Vor der Abgabe die Checkliste unten durchgehen.
 
