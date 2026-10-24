@@ -30,7 +30,7 @@ Ausführlich: siehe [INSTALLATION.md](INSTALLATION.md).
 | `modi/*.php` | HTML | HTML-Teil der einzelnen Lernmodi |
 | `api.php` | PHP | JSON-Schnittstelle für JavaScript (Ajax): Set laden, Stern, Lernfortschritt |
 | `inc/daten.php` | PHP | Laden/Speichern der Sets in `data/sets.json` |
-| `inc/kopf.php`, `inc/fuss.php` | PHP + HTML | gemeinsamer Seitenkopf und -fuß |
+| `inc/kopf.php` | PHP + HTML | gemeinsamer Seitenkopf mit Navigation |
 | `inc/modi.php` | PHP | Liste der Lernmodi |
 | `css/style.css` | CSS | gesamtes Layout, Dark Mode, Umdreh-Animation |
 | `js/gemeinsam.js` | JavaScript | Dark Mode, Vorlesen, Ajax, Mischen, tolerante Antwortprüfung |

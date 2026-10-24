@@ -1,12 +1,11 @@
 <?php
 /*
- * bearbeiten.php – Set anlegen oder bearbeiten.
+ * Set anlegen oder bearbeiten.
  *
  *   bearbeiten.php          -> neues Set anlegen
  *   bearbeiten.php?id=...   -> vorhandenes Set bearbeiten
  *
- * Das Formular schickt alles per POST an diese Seite zurück. PHP speichert dann
- * und leitet auf die Set-Ansicht weiter (Post-Redirect-Get, damit F5 nicht doppelt speichert).
+ * Das Formular schickt alles per POST an diese Seite zurück. PHP speichert dann und leitet auf die Set-Ansicht weiter.
  */
 require __DIR__ . '/inc/daten.php';
 
@@ -31,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $set['fach']         = trim($_POST['fach'] ?? '');
     $set['beschreibung'] = trim($_POST['beschreibung'] ?? '');
 
-    // Nur Sprachen aus unserer Liste erlauben.
+    // Nur Sprachen aus der Liste erlauben.
     $sb = $_POST['sprache_begriff'] ?? 'de-DE';
     $sd = $_POST['sprache_definition'] ?? 'de-DE';
     $set['sprache_begriff']    = isset(SPRACHEN[$sb]) ? $sb : 'de-DE';
@@ -107,24 +106,24 @@ require __DIR__ . '/inc/kopf.php';
 <h1><?= $ist_neu ? 'Neues Lernset anlegen' : 'Set bearbeiten' ?></h1>
 
 <?php if ($fehler !== ''): ?>
-    <p class="meldung fehler"><?= e($fehler) ?></p>
+    <p class="meldung fehler"><?= escape($fehler) ?></p>
 <?php endif; ?>
 
 <form method="post" class="editor" id="editor">
     <section class="box raster-2">
         <label>Name des Sets
-            <input type="text" name="name" value="<?= e($set['name']) ?>" required placeholder="z. B. Englisch Unit 3">
+            <input type="text" name="name" value="<?= escape($set['name']) ?>" required placeholder="z. B. Englisch Unit 3">
         </label>
         <label>Fach / Ordner
-            <input type="text" name="fach" value="<?= e($set['fach']) ?>" list="faecher" placeholder="z. B. Englisch">
+            <input type="text" name="fach" value="<?= escape($set['fach']) ?>" list="faecher" placeholder="z. B. Englisch">
             <datalist id="faecher">
                 <?php foreach (array_keys($faecher) as $f): ?>
-                    <option value="<?= e($f) ?>">
+                    <option value="<?= escape($f) ?>">
                 <?php endforeach; ?>
             </datalist>
         </label>
         <label class="breit">Beschreibung (optional)
-            <input type="text" name="beschreibung" value="<?= e($set['beschreibung']) ?>">
+            <input type="text" name="beschreibung" value="<?= escape($set['beschreibung']) ?>">
         </label>
         <label>Sprache der Begriffe (Vorlesen)
             <select name="sprache_begriff">
@@ -148,9 +147,9 @@ require __DIR__ . '/inc/kopf.php';
         <?php foreach ($zeilen as $i => $karte): ?>
             <div class="karten-zeile">
                 <span class="nummer"><?= $i + 1 ?></span>
-                <input type="hidden" name="karten[<?= $i ?>][id]" value="<?= e($karte['id']) ?>">
-                <textarea name="karten[<?= $i ?>][begriff]" rows="2" placeholder="Begriff"><?= e($karte['begriff']) ?></textarea>
-                <textarea name="karten[<?= $i ?>][definition]" rows="2" placeholder="Definition"><?= e($karte['definition']) ?></textarea>
+                <input type="hidden" name="karten[<?= $i ?>][id]" value="<?= escape($karte['id']) ?>">
+                <textarea name="karten[<?= $i ?>][begriff]" rows="2" placeholder="Begriff"><?= escape($karte['begriff']) ?></textarea>
+                <textarea name="karten[<?= $i ?>][definition]" rows="2" placeholder="Definition"><?= escape($karte['definition']) ?></textarea>
                 <button type="button" class="knopf-klein zeile-loeschen" title="Karte entfernen">Entfernen</button>
             </div>
         <?php endforeach; ?>
@@ -170,13 +169,14 @@ require __DIR__ . '/inc/kopf.php';
                 <option value=":">Doppelpunkt ( : )</option>
             </select>
         </label>
+        <!-- &#10 = Zeilenumbruch -->
         <textarea name="import" id="import" rows="6" placeholder="Begriff ; Definition&#10;Begriff ; Definition"></textarea>
         <p class="leise" id="import-vorschau"></p>
     </details>
 
     <div class="aktionen">
         <button type="submit" class="knopf">Speichern</button>
-        <a class="knopf zweitrangig" href="<?= $ist_neu ? 'index.php' : 'set.php?id=' . e($set['id']) ?>">Abbrechen</a>
+        <a class="knopf zweitrangig" href="<?= $ist_neu ? 'index.php' : 'set.php?id=' . escape($set['id']) ?>">Abbrechen</a>
     </div>
 </form>
 
@@ -192,4 +192,3 @@ require __DIR__ . '/inc/kopf.php';
 </template>
 
 <script src="js/bearbeiten.js" defer></script>
-<?php require __DIR__ . '/inc/fuss.php'; ?>

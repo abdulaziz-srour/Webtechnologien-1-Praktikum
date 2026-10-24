@@ -1,6 +1,6 @@
 <?php
 /*
- * daten.php – Alles rund ums Laden und Speichern der Lernsets.
+ * Alles rund ums Laden und Speichern der Lernsets.
  *
  * Alle Sets liegen zusammen in EINER JSON-Datei: data/sets.json
  * Aufbau der Datei (vereinfacht):
@@ -22,10 +22,8 @@
  *   }
  * }
  *
- * Es wird keine Datenbank gebraucht. Existiert die Datei noch nicht,
- * wird sie beim ersten Aufruf mit zwei Beispiel-Sets angelegt.
+ * Existiert die Datei noch nicht, wird sie beim ersten Aufruf mit zwei Beispiel-Sets angelegt.
  */
-
 const DATEN_ORDNER = __DIR__ . '/../data';
 const DATEN_DATEI  = DATEN_ORDNER . '/sets.json';
 
@@ -40,7 +38,7 @@ const SPRACHEN = [
     'ar-SA' => 'Arabisch',
 ];
 
-/** Liest alle Sets aus der JSON-Datei und gibt sie als Array zurück (Schlüssel = Set-ID). */
+// Liest alle Sets aus der JSON-Datei und gibt sie als Array zurück (Schlüssel = Set-ID).
 function lade_alle_sets(): array
 {
     if (!file_exists(DATEN_DATEI)) {
@@ -51,7 +49,7 @@ function lade_alle_sets(): array
     return is_array($sets) ? $sets : [];
 }
 
-/** Schreibt alle Sets zurück in die JSON-Datei (schön formatiert, damit man sie auch lesen kann). */
+// Schreibt alle Sets zurück in die JSON-Datei (schön formatiert, damit man sie auch lesen kann).
 function speichere_alle_sets(array $sets): void
 {
     if (!is_dir(DATEN_ORDNER)) {
@@ -62,14 +60,14 @@ function speichere_alle_sets(array $sets): void
     file_put_contents(DATEN_DATEI, $json, LOCK_EX);
 }
 
-/** Gibt ein einzelnes Set zurück oder null, wenn es die ID nicht gibt. */
+// Gibt ein einzelnes Set zurück oder null, wenn es die ID nicht gibt.
 function lade_set(string $id): ?array
 {
     $sets = lade_alle_sets();
     return $sets[$id] ?? null;
 }
 
-/** Speichert (oder ersetzt) ein einzelnes Set. */
+// Speichert (oder ersetzt) ein einzelnes Set.
 function speichere_set(array $set): void
 {
     $sets = lade_alle_sets();
@@ -78,7 +76,7 @@ function speichere_set(array $set): void
     speichere_alle_sets($sets);
 }
 
-/** Löscht ein Set komplett. */
+// Löscht ein Set komplett.
 function loesche_set(string $id): void
 {
     $sets = lade_alle_sets();
@@ -86,19 +84,19 @@ function loesche_set(string $id): void
     speichere_alle_sets($sets);
 }
 
-/** Erzeugt eine zufällige, kurze ID wie "3f9a1c0b". */
+// Erzeugt eine zufällige, kurze ID wie "3f9a1c0b".
 function neue_id(): string
 {
     return bin2hex(random_bytes(4));
 }
 
-/** Prüft, ob eine ID gültig aussieht (nur Kleinbuchstaben a–f und Ziffern). */
+// Prüft, ob eine ID gültig aussieht (nur Kleinbuchstaben a–f und Ziffern).
 function gueltige_id(string $id): bool
 {
     return preg_match('/^[a-f0-9]{8}$/', $id) === 1;
 }
 
-/** Legt eine neue Karte mit leerem Lernfortschritt an. */
+// Legt eine neue Karte mit leerem Lernfortschritt an.
 function neue_karte(string $begriff, string $definition): array
 {
     return [
@@ -112,7 +110,7 @@ function neue_karte(string $begriff, string $definition): array
     ];
 }
 
-/** Legt ein neues, leeres Set an (noch ohne es zu speichern). */
+// Legt ein neues, leeres Set an (noch ohne es zu speichern).
 function neues_set(): array
 {
     return [
@@ -131,7 +129,7 @@ function neues_set(): array
 /**
  * Wandelt eingefügten Text in Karten um.
  * Jede Zeile ist eine Karte, Begriff und Definition werden durch $trenner getrennt,
- * z. B. "HTML ; Auszeichnungssprache für Webseiten".
+ * z.B. "HTML ; Auszeichnungssprache für Webseiten".
  */
 function importiere_text(string $text, string $trenner): array
 {
@@ -141,10 +139,11 @@ function importiere_text(string $text, string $trenner): array
     $karten = [];
     $zeilen = preg_split('/\r\n|\r|\n/', $text);
     foreach ($zeilen as $zeile) {
-        // Nur am ERSTEN Trennzeichen teilen, damit die Definition selbst eins enthalten darf.
+        // Nur am ersten Trennzeichen teilen, da die Definition selbst eins enthalten darf.
         $teile = explode($trenner, $zeile, 2);
+        // Zeile ohne Trennzeichen: überspringen
         if (count($teile) < 2) {
-            continue; // Zeile ohne Trennzeichen (z. B. Leerzeile) überspringen
+            continue;
         }
         $begriff = trim($teile[0]);
         $definition = trim($teile[1]);
@@ -155,7 +154,7 @@ function importiere_text(string $text, string $trenner): array
     return $karten;
 }
 
-/** Berechnet die Statistik eines Sets: Anzahl Karten, davon gekonnt, markiert, Prozent. */
+// Berechnet die Statistik eines Sets: Anzahl Karten, davon gekonnt, markiert, Prozent.
 function statistik(array $set): array
 {
     $gesamt = count($set['karten']);
@@ -177,22 +176,23 @@ function statistik(array $set): array
     ];
 }
 
-/** Sucht (ohne Beachtung der Groß-/Kleinschreibung), ob $suche in $text vorkommt. */
+// Sucht (ohne Beachtung der Groß-/Kleinschreibung), ob $suche in $text vorkommt.
 function enthaelt(string $text, string $suche): bool
 {
+    // mb_stripos falls vorhanden (Umlaute), sonst stripos
     if (function_exists('mb_stripos')) {
         return mb_stripos($text, $suche) !== false;
     }
     return stripos($text, $suche) !== false;
 }
 
-/** Kurzform für htmlspecialchars – schützt vor kaputtem HTML und eingeschleustem Code. */
-function e(?string $text): string
+// Kurzform für htmlspecialchars – schützt vor kaputtem HTML und eingeschleustem Code.
+function escape(?string $text): string
 {
     return htmlspecialchars($text ?? '', ENT_QUOTES, 'UTF-8');
 }
 
-/** Beispiel-Sets, damit die App beim ersten Start nicht leer ist. */
+// Beispiel-Sets, damit die App beim ersten Start nicht leer ist.
 function beispiel_sets(): array
 {
     $wt1 = neues_set();
@@ -220,8 +220,14 @@ function beispiel_sets(): array
     $englisch['sprache_begriff'] = 'en-US';
     $englisch['sprache_definition'] = 'de-DE';
     $englisch['karten'] = importiere_text(
-        "dog ; Hund\ncat ; Katze\nhouse ; Haus\ntree ; Baum\nbook ; Buch\n" .
-        "computer ; Computer\nwindow ; Fenster\nfriend ; Freund",
+        "dog ; Hund\n" .
+        "cat ; Katze\n" .
+        "house ; Haus\n" .
+        "tree ; Baum\n" .
+        "book ; Buch\n" .
+        "computer ; Computer\n" .
+        "window ; Fenster\n" .
+        "friend ; Freund",
         ';'
     );
 
