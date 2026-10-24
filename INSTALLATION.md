@@ -69,4 +69,5 @@ und sind beim nächsten Start wieder da.
 | Fehler beim Speichern / „Permission denied“ | PHP braucht Schreibrechte im Ordner `data/`. Unter Linux/macOS z. B. `chmod 777 data`. |
 | Seite zeigt den PHP-Code statt der App | Die Seite wurde direkt als Datei geöffnet. Immer über `http://localhost:8000` aufrufen (Schritt 3 und 4). |
 | Vorlesen ist stumm | Die Sprachausgabe nutzt die Stimmen des Betriebssystems. Lautstärke prüfen; unter Linux muss ggf. eine Sprachausgabe (z. B. `speech-dispatcher`) installiert sein. Für eine Sprache ohne installierte Stimme nimmt der Browser die Standardstimme. |
+| Vorlesen klingt englisch, obwohl das Set auf Deutsch steht | Auf dem Rechner ist keine deutsche Stimme installiert. macOS: System Settings → Accessibility → Read & Speak (ältere Versionen: Spoken Content) → bei „System Voice“ auf ⓘ → unter „German“ z. B. „Anna“ herunterladen. Windows: Einstellungen → Zeit und Sprache → Sprache → Deutsch → Sprachausgabe. Danach den Browser neu starten. |
 | Alles auf Anfang setzen | Server beenden, `data/sets.json` löschen, Server neu starten. Die Beispiel-Sets werden neu angelegt. |
