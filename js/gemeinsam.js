@@ -75,9 +75,13 @@ function vorlesen(text, sprache, beiEnde) {
     if (stimmen.length === 0) ladeStimmen(); // falls die Liste noch leer war
     const aeusserung = new SpeechSynthesisUtterance(text);
     aeusserung.lang = sprache || 'de-DE';
-    // Passende Stimme suchen (falls vorhanden), sonst nimmt der Browser die Standardstimme.
-    const stimme = speechSynthesis.getVoices().find(s => s.lang.replace('_', '-').startsWith(aeusserung.lang.slice(0, 2)));
-    if (stimme) aeusserung.voice = stimme;
+    // Passende Stimme suchen (falls vorhanden), sonst nimmt der Browser die Standardstimme (oft Englisch).
+    const stimme = findeStimme(aeusserung.lang);
+    if (stimme) {
+        aeusserung.voice = stimme;
+    } else {
+        console.warn('Keine Stimme für ' + aeusserung.lang + ' installiert, der Browser nimmt seine Standardstimme.');
+    }
     if (beiEnde) aeusserung.onend = beiEnde;
     speechSynthesis.speak(aeusserung);
 }
