@@ -19,7 +19,7 @@ function istDunkel() {
 }
 
 function aktualisiereThemaKnopf() {
-    if (themaKnopf) themaKnopf.textContent = istDunkel() ? '☀️' : '🌙';
+    if (themaKnopf) themaKnopf.textContent = istDunkel() ? 'Hell' : 'Dunkel';
 }
 
 if (themaKnopf) {
@@ -114,10 +114,10 @@ async function ladeLernSet() {
     if (bereich.dataset.nurSterne === '1') {
         karten = karten.filter(karte => karte.stern);
         if (karten.length === 0) {
-            hinweis.textContent = 'In diesem Set ist noch keine Karte mit ★ markiert – es werden alle Karten verwendet.';
+            hinweis.textContent = 'In diesem Set ist noch keine Karte markiert, deshalb werden alle Karten verwendet.';
             karten = set.karten;
         } else {
-            hinweis.textContent = 'Es werden nur die ' + karten.length + ' markierten Karten (★) gelernt.';
+            hinweis.textContent = 'Es werden nur die ' + karten.length + ' markierten Karten gelernt.';
         }
     } else {
         hinweis.hidden = true;

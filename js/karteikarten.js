@@ -74,7 +74,7 @@ function autoSchritt() {
 
 function schalteAuto() {
     kk.auto = !kk.auto;
-    document.getElementById('kk-auto').textContent = kk.auto ? '⏸ Anhalten' : '▶ Automatisch abspielen';
+    document.getElementById('kk-auto').textContent = kk.auto ? 'Anhalten' : 'Automatisch abspielen';
     if (kk.auto) {
         autoSchritt();
     } else if ('speechSynthesis' in window) {

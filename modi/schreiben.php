@@ -10,13 +10,13 @@
     </div>
 
     <p class="zaehler">Runde <span id="sc-runde">1</span> · Karte <span id="sc-nr">1</span> von <span id="sc-anzahl">0</span>
-        · ✓ <span id="sc-richtig">0</span> · ✗ <span id="sc-falsch">0</span></p>
+        · Richtig: <span id="sc-richtig">0</span> · Falsch: <span id="sc-falsch">0</span></p>
 
     <div class="frage-karte" id="sc-frage">
         <p class="art">Tippe die Antwort ein – Groß-/Kleinschreibung und kleine Tippfehler sind egal</p>
         <p class="frage-text">
             <span id="sc-frage-text"></span>
-            <button type="button" class="knopf-klein" id="sc-vorlesen" title="Vorlesen">🔊</button>
+            <button type="button" class="knopf-klein" id="sc-vorlesen" >Vorlesen</button>
         </p>
         <form class="eingabe-zeile" id="sc-formular" autocomplete="off">
             <input type="text" id="sc-eingabe" placeholder="Antwort …">

@@ -63,7 +63,7 @@ function zeigeSchreibErgebnis(ergebnis, eingabe) {
 
     let text;
     if (ergebnis === 'richtig') {
-        text = 'Richtig! 🎉';
+        text = 'Richtig!';
     } else if (ergebnis === 'fast') {
         text = 'Fast richtig – kleiner Tippfehler. Genau: „' + loesung + '“';
     } else if (eingabe.trim() === '') {
@@ -103,11 +103,10 @@ function zeigeRundenende() {
 
     const fertig = sc.falsche.length === 0;
     document.getElementById('sc-ende-titel').textContent = fertig
-        ? '🎉 Geschafft – alle Karten richtig!'
+        ? 'Geschafft, alle Karten richtig!'
         : 'Runde ' + sc.runde + ' beendet';
     document.getElementById('sc-naechste-runde').hidden = fertig;
     document.getElementById('sc-naechste-runde').textContent = sc.falsche.length + ' falsche Karte(n) wiederholen';
-    document.getElementById('sc-ende-prozent').classList.toggle('erfolg', fertig);
 }
 
 /* ---------- Ereignisse ---------- */

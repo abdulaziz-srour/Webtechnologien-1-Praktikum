@@ -94,7 +94,7 @@ function pruefeLernAuswahl(knopf) {
     });
     const richtig = knopf.dataset.text === loesung;
     if (!richtig) knopf.classList.add('falsch');
-    zeigeLernFeedback(richtig, richtig ? 'Richtig! 👍' : 'Leider falsch. Richtig ist: ' + loesung);
+    zeigeLernFeedback(richtig, richtig ? 'Richtig!' : 'Leider falsch. Richtig ist: ' + loesung);
 }
 
 /** Schreiben: Eingabe tolerant prüfen. */
@@ -105,7 +105,7 @@ lnFormular.addEventListener('submit', ereignis => {
     const ergebnis = pruefeAntwort(lnEingabe.value, loesung);
     lnEingabe.disabled = true;
     if (ergebnis === 'richtig') {
-        zeigeLernFeedback(true, 'Richtig! 🎉');
+        zeigeLernFeedback(true, 'Richtig!');
     } else if (ergebnis === 'fast') {
         zeigeLernFeedback(true, 'Fast richtig (kleiner Tippfehler) – genau: ' + loesung);
     } else {

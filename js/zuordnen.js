@@ -100,7 +100,7 @@ async function beendeZuordnen() {
     const daten = await sendeAnServer({ aktion: 'bestzeit', id: zo.set.id, zeit: zeit.toFixed(1) });
     const rekord = document.getElementById('zo-rekord');
     if (daten && daten.neuer_rekord) {
-        rekord.textContent = '🏆 Neue Bestzeit!';
+        rekord.textContent = 'Neue Bestzeit!';
     } else if (daten && daten.bestzeit) {
         rekord.textContent = 'Bestzeit: ' + formatiereZeit(daten.bestzeit) + ' s';
     }

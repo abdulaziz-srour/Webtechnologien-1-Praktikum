@@ -151,7 +151,7 @@ require __DIR__ . '/inc/kopf.php';
                 <input type="hidden" name="karten[<?= $i ?>][id]" value="<?= e($karte['id']) ?>">
                 <textarea name="karten[<?= $i ?>][begriff]" rows="2" placeholder="Begriff"><?= e($karte['begriff']) ?></textarea>
                 <textarea name="karten[<?= $i ?>][definition]" rows="2" placeholder="Definition"><?= e($karte['definition']) ?></textarea>
-                <button type="button" class="knopf-klein zeile-loeschen" title="Karte entfernen">✕</button>
+                <button type="button" class="knopf-klein zeile-loeschen" title="Karte entfernen">Entfernen</button>
             </div>
         <?php endforeach; ?>
     </div>
@@ -187,7 +187,7 @@ require __DIR__ . '/inc/kopf.php';
         <input type="hidden" name="karten[__NR__][id]" value="">
         <textarea name="karten[__NR__][begriff]" rows="2" placeholder="Begriff"></textarea>
         <textarea name="karten[__NR__][definition]" rows="2" placeholder="Definition"></textarea>
-        <button type="button" class="knopf-klein zeile-loeschen" title="Karte entfernen">✕</button>
+        <button type="button" class="knopf-klein zeile-loeschen" title="Karte entfernen">Entfernen</button>
     </div>
 </template>
 

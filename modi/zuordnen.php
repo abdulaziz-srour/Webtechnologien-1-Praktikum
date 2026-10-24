@@ -18,7 +18,7 @@
 
     <div class="box ergebnis" id="zo-ende" hidden>
         <h2>Fertig!</h2>
-        <p class="gross erfolg"><span id="zo-endzeit"></span> s</p>
+        <p class="gross"><span id="zo-endzeit"></span> s</p>
         <p id="zo-rekord"></p>
         <button type="button" class="knopf" id="zo-nochmal">Nochmal spielen</button>
     </div>

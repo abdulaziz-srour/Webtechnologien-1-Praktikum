@@ -42,74 +42,76 @@ $titel = $set['name'];
 require __DIR__ . '/inc/kopf.php';
 ?>
 
-<section class="kopfbereich">
-    <div>
-        <p class="leise">📁 <?= e($set['fach'] !== '' ? $set['fach'] : 'Ohne Fach') ?></p>
-        <h1><?= e($set['name']) ?></h1>
-        <?php if ($set['beschreibung'] !== ''): ?>
-            <p><?= e($set['beschreibung']) ?></p>
-        <?php endif; ?>
-    </div>
-    <div class="aktionen">
-        <a class="knopf zweitrangig" href="bearbeiten.php?id=<?= e($id) ?>">✏️ Bearbeiten</a>
-        <form method="post" data-bestaetigen="Lernfortschritt für dieses Set wirklich zurücksetzen?">
-            <input type="hidden" name="aktion" value="zuruecksetzen">
-            <button type="submit" class="knopf zweitrangig">↺ Fortschritt zurücksetzen</button>
-        </form>
-        <form method="post" data-bestaetigen="Set „<?= e($set['name']) ?>“ wirklich löschen?">
-            <input type="hidden" name="aktion" value="loeschen">
-            <button type="submit" class="knopf gefahr">🗑 Löschen</button>
-        </form>
-    </div>
-</section>
+<p><a href="index.php">Zurück zur Übersicht</a></p>
+<h1><?= e($set['name']) ?></h1>
+<p class="leise">
+    Fach: <?= e($set['fach'] !== '' ? $set['fach'] : 'ohne Fach') ?>
+    <?php if ($set['beschreibung'] !== ''): ?> – <?= e($set['beschreibung']) ?><?php endif; ?>
+</p>
 
-<section class="box statistik">
-    <div><strong><?= $stat['gesamt'] ?></strong><span>Karten</span></div>
-    <div><strong><?= $stat['gekonnt'] ?></strong><span>gekonnt</span></div>
-    <div><strong><?= $stat['gesamt'] - $stat['gekonnt'] ?></strong><span>noch lernen</span></div>
-    <div><strong><?= $stat['sterne'] ?></strong><span>mit ★ markiert</span></div>
+<div class="aktionen">
+    <a class="knopf zweitrangig" href="bearbeiten.php?id=<?= e($id) ?>">Bearbeiten</a>
+    <form method="post" data-bestaetigen="Lernfortschritt für dieses Set wirklich zurücksetzen?">
+        <input type="hidden" name="aktion" value="zuruecksetzen">
+        <button type="submit" class="knopf zweitrangig">Fortschritt zurücksetzen</button>
+    </form>
+    <form method="post" data-bestaetigen="Set „<?= e($set['name']) ?>“ wirklich löschen?">
+        <input type="hidden" name="aktion" value="loeschen">
+        <button type="submit" class="knopf gefahr">Löschen</button>
+    </form>
+</div>
+
+<h2>Statistik</h2>
+<p>
+    <?= $stat['gesamt'] ?> Karten, davon <?= $stat['gekonnt'] ?> gekonnt (<?= $stat['prozent'] ?> %)
+    und <?= $stat['sterne'] ?> markiert.
     <?php if ($set['bestzeit_zuordnen'] !== null): ?>
-        <div><strong><?= number_format($set['bestzeit_zuordnen'], 1, ',', '') ?> s</strong><span>Bestzeit Zuordnen</span></div>
+        Bestzeit beim Zuordnen: <?= number_format($set['bestzeit_zuordnen'], 1, ',', '') ?> s.
     <?php endif; ?>
-    <div class="fortschritt gross" title="<?= $stat['prozent'] ?> % gekonnt"><span style="width: <?= $stat['prozent'] ?>%"></span></div>
-</section>
+</p>
+<span class="fortschritt" title="<?= $stat['prozent'] ?> % gekonnt"><span style="width: <?= $stat['prozent'] ?>%"></span></span>
 
 <!-- Modus-Auswahl: ein normales GET-Formular. Jeder Knopf schickt einen anderen Wert für "modus". -->
-<form class="modi" method="get" action="lernen.php">
+<h2>Lernen</h2>
+<form method="get" action="lernen.php">
     <input type="hidden" name="id" value="<?= e($id) ?>">
-    <div class="modi-raster">
+    <div class="aktionen">
         <?php foreach ($modi as $schluessel => $modus): ?>
-            <button type="submit" name="modus" value="<?= $schluessel ?>" class="modus-kachel">
-                <span class="symbol"><?= $modus['symbol'] ?></span>
-                <strong><?= $modus['name'] ?></strong>
-                <span class="leise"><?= $modus['text'] ?></span>
-            </button>
+            <button type="submit" name="modus" value="<?= $schluessel ?>" class="knopf" title="<?= $modus['text'] ?>"><?= $modus['name'] ?></button>
         <?php endforeach; ?>
     </div>
     <label class="schalter">
         <input type="checkbox" name="sterne" value="1">
-        Nur mit ★ markierte Karten lernen
+        Nur markierte Karten lernen
     </label>
 </form>
 
-<section class="box">
-    <h2>Alle Karten (<?= $stat['gesamt'] ?>)</h2>
-    <ul class="kartenliste">
+<h2>Karten</h2>
+<table class="kartentabelle">
+    <thead>
+        <tr>
+            <th>Begriff</th>
+            <th>Definition</th>
+            <th title="So oft richtig / falsch beantwortet">Richtig / Falsch</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
         <?php foreach ($set['karten'] as $karte): ?>
-            <li class="<?= $karte['gekonnt'] ? 'gekonnt' : '' ?>">
-                <span class="begriff"><?= e($karte['begriff']) ?></span>
-                <span class="definition"><?= e($karte['definition']) ?></span>
-                <span class="knoepfe">
-                    <span class="leise zaehlung" title="So oft richtig / falsch beantwortet">✓ <?= $karte['richtig'] ?> · ✗ <?= $karte['falsch'] ?></span>
+            <tr class="<?= $karte['gekonnt'] ? 'gekonnt' : '' ?>">
+                <td class="begriff"><?= e($karte['begriff']) ?></td>
+                <td><?= e($karte['definition']) ?></td>
+                <td><?= $karte['richtig'] ?> / <?= $karte['falsch'] ?></td>
+                <td class="knoepfe">
                     <!-- data-*-Attribute werden von js/gemeinsam.js ausgelesen. -->
-                    <button type="button" class="knopf-klein" title="Vorlesen"
-                            data-vorlesen="<?= e($karte['begriff']) ?>" data-sprache="<?= e($set['sprache_begriff']) ?>">🔊</button>
-                    <button type="button" class="knopf-klein stern <?= $karte['stern'] ? 'aktiv' : '' ?>" title="Markieren"
+                    <button type="button" class="knopf-klein"
+                            data-vorlesen="<?= e($karte['begriff']) ?>" data-sprache="<?= e($set['sprache_begriff']) ?>">Vorlesen</button>
+                    <button type="button" class="knopf-klein stern <?= $karte['stern'] ? 'aktiv' : '' ?>" title="Karte markieren"
                             data-stern="<?= e($karte['id']) ?>" data-set="<?= e($id) ?>">★</button>
-                </span>
-            </li>
+                </td>
+            </tr>
         <?php endforeach; ?>
-    </ul>
-</section>
+    </tbody>
+</table>
 
 <?php require __DIR__ . '/inc/fuss.php'; ?>
