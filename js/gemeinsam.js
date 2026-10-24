@@ -44,6 +44,24 @@ document.querySelectorAll('form[data-bestaetigen]').forEach(formular => {
 
 /* ---------- Vorlesen (Web Speech API, im Browser eingebaut) ---------- */
 
+// Liste der Stimmen. Chrome lädt sie erst nach dem Seitenaufruf nach,
+// deshalb holen wir sie beim Start UND sobald "voiceschanged" meldet, dass sie da sind.
+let stimmen = [];
+function ladeStimmen() {
+    stimmen = speechSynthesis.getVoices();
+}
+if ('speechSynthesis' in window) {
+    ladeStimmen();
+    speechSynthesis.addEventListener('voiceschanged', ladeStimmen);
+}
+
+/** Sucht eine Stimme für die Sprache: erst genau (de-DE), sonst nur nach Sprache (de). */
+function findeStimme(sprache) {
+    const genau = stimmen.find(s => s.lang.replace('_', '-') === sprache);
+    if (genau) return genau;
+    return stimmen.find(s => s.lang.startsWith(sprache.slice(0, 2)));
+}
+
 /**
  * Liest einen Text vor. sprache z. B. "de-DE" oder "en-US".
  * beiEnde (optional) wird aufgerufen, wenn fertig vorgelesen wurde.
@@ -54,10 +72,11 @@ function vorlesen(text, sprache, beiEnde) {
         return;
     }
     speechSynthesis.cancel(); // laufende Ausgabe abbrechen
+    if (stimmen.length === 0) ladeStimmen(); // falls die Liste noch leer war
     const aeusserung = new SpeechSynthesisUtterance(text);
     aeusserung.lang = sprache || 'de-DE';
-    // Passende Stimme suchen (falls vorhanden), sonst nimmt der Browser die Standardstimme.
-    const stimme = speechSynthesis.getVoices().find(s => s.lang.replace('_', '-').startsWith(aeusserung.lang.slice(0, 2)));
+    // Ohne passende Stimme nimmt der Browser seine Standardstimme (oft Englisch).
+    const stimme = findeStimme(aeusserung.lang);
     if (stimme) aeusserung.voice = stimme;
     if (beiEnde) aeusserung.onend = beiEnde;
     speechSynthesis.speak(aeusserung);
