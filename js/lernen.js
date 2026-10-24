@@ -1,5 +1,5 @@
 /*
- * lernen.js – Modus "Lernen" (wie "Lernen" bei Quizlet).
+ * Modus "Lernen".
  *
  * Jede Karte hat eine Stufe:
  *   0 = neu        -> wird als Multiple-Choice-Frage gestellt
@@ -28,7 +28,7 @@ const lnFeedback = document.getElementById('ln-feedback');
 function starteLernen() {
     ln.antwortMit = document.getElementById('ln-antwort-mit').value;
     ln.stufe = {};
-    // Mit nur einer Karte gibt es kein sinnvolles Multiple Choice -> gleich mit Schreiben anfangen.
+    // Mit nur einer Karte gibt es kein sinnvolles Multiple Choice -> direkt mit Schreiben anfangen.
     const startStufe = ln.karten.length < 2 ? 1 : 0;
     ln.karten.forEach(karte => { ln.stufe[karte.id] = startStufe; });
     ln.warteschlange = mische(ln.karten);
@@ -38,7 +38,7 @@ function starteLernen() {
     naechsteLernFrage();
 }
 
-/** Zähler und Fortschrittsbalken aktualisieren. */
+// Zähler und Fortschrittsbalken aktualisieren.
 function zeigeLernFortschritt() {
     const stufen = Object.values(ln.stufe);
     document.getElementById('ln-neu').textContent = stufen.filter(s => s === 0).length;
@@ -84,7 +84,7 @@ function naechsteLernFrage() {
     }
 }
 
-/** Multiple Choice: angeklickte Option prüfen und richtig/falsch einfärben. */
+// Multiple Choice: angeklickte Option prüfen und richtig/falsch einfärben.
 function pruefeLernAuswahl(knopf) {
     if (ln.beantwortet) return;
     const loesung = frageUndAntwort(ln.aktuell, ln.set, ln.antwortMit).antwort;
@@ -97,7 +97,7 @@ function pruefeLernAuswahl(knopf) {
     zeigeLernFeedback(richtig, richtig ? 'Richtig!' : 'Leider falsch. Richtig ist: ' + loesung);
 }
 
-/** Schreiben: Eingabe tolerant prüfen. */
+// Schreiben: Eingabe tolerant prüfen.
 lnFormular.addEventListener('submit', ereignis => {
     ereignis.preventDefault();
     if (ln.beantwortet) return;
@@ -123,7 +123,7 @@ function zeigeLernFeedback(richtig, text, dochRichtigMoeglich = false) {
     document.getElementById('ln-weiter').focus();
 }
 
-/** "Weiter": Ergebnis übernehmen, auf dem Server speichern und nächste Frage stellen. */
+// "Weiter": Ergebnis übernehmen, auf dem Server speichern und nächste Frage stellen.
 function lernWeiter() {
     const karte = ln.aktuell;
     if (ln.richtig) {

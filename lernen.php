@@ -1,6 +1,6 @@
 <?php
 /*
- * lernen.php?id=...&modus=...&sterne=1 – Rahmen für alle Lernmodi.
+ * Rahmen für alle Lernmodi.
  *
  * PHP prüft hier nur, ob Set und Modus gültig sind, und bindet dann
  *   - das HTML des Modus  (modi/<modus>.php) und
@@ -27,23 +27,22 @@ $titel = $modi[$modus]['name'] . ' · ' . $set['name'];
 require __DIR__ . '/inc/kopf.php';
 ?>
 
-<p><a href="set.php?id=<?= e($id) ?>">Zurück zu „<?= e($set['name']) ?>“</a></p>
+<p><a href="set.php?id=<?= escape($id) ?>">Zurück zu „<?= escape($set['name']) ?>“</a></p>
 <h1><?= $modi[$modus]['name'] ?></h1>
 
 <!-- Zwischen den Modi wechseln -->
 <nav class="modus-wechsel">
     Modus:
     <?php foreach ($modi as $schluessel => $m): ?>
-        <a href="lernen.php?id=<?= e($id) ?>&amp;modus=<?= $schluessel ?><?= $nur_sterne ? '&amp;sterne=1' : '' ?>"
+        <a href="lernen.php?id=<?= escape($id) ?>&amp;modus=<?= $schluessel ?><?= $nur_sterne ? '&amp;sterne=1' : '' ?>"
            class="<?= $schluessel === $modus ? 'aktiv' : '' ?>"><?= $m['name'] ?></a>
     <?php endforeach; ?>
 </nav>
 
 <!-- Diese Daten liest js/gemeinsam.js aus, um das richtige Set zu laden. -->
-<div id="lernbereich" data-set="<?= e($id) ?>" data-nur-sterne="<?= $nur_sterne ? '1' : '0' ?>">
+<div id="lernbereich" data-set="<?= escape($id) ?>" data-nur-sterne="<?= $nur_sterne ? '1' : '0' ?>">
     <p class="leise" id="lade-hinweis">Karten werden geladen …</p>
     <?php require __DIR__ . '/modi/' . $modus . '.php'; ?>
 </div>
 
-<script src="js/<?= $modus ?>.js" defer></script>
-<?php require __DIR__ . '/inc/fuss.php'; ?>
+<script src="js/<?= escape($modus) ?>.js" defer></script>

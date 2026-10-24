@@ -1,5 +1,5 @@
 /*
- * test.js – Modus "Test":
+ * Modus "Test":
  * Erstellt einen Test aus Multiple Choice, Wahr/Falsch und Freitext-Fragen.
  * Falsche Antwortmöglichkeiten kommen aus anderen Karten desselben Sets.
  * Nach dem Abgeben gibt es eine Punktzahl und jede Frage wird markiert.
@@ -15,7 +15,7 @@ const ts = {
 const tsListe = document.getElementById('ts-liste');
 const typNamen = { mc: 'Multiple Choice', wf: 'Wahr oder falsch?', frei: 'Freitext' };
 
-/** Erstellt die Fragen aus den Einstellungen. */
+// Erstellt die Fragen aus den Einstellungen.
 function erstelleTest(anzahl, typen) {
     const fragen = [];
     mische(ts.karten).slice(0, anzahl).forEach((karte, i) => {
@@ -39,7 +39,7 @@ function erstelleTest(anzahl, typen) {
     return mische(fragen);
 }
 
-/** Baut das HTML für alle Fragen. */
+// Baut das HTML für alle Fragen.
 function zeigeTest() {
     tsListe.innerHTML = '';
     ts.fragen.forEach((frage, nr) => {
@@ -69,7 +69,7 @@ function zeigeTest() {
     });
 }
 
-/** Alle Antworten auswerten, markieren und Punktzahl anzeigen. */
+// Alle Antworten auswerten, markieren und Punktzahl anzeigen.
 function werteTestAus() {
     const formular = document.getElementById('ts-fragen');
     let punkte = 0;
@@ -114,8 +114,7 @@ function werteTestAus() {
     const prozent = Math.round(punkte / ts.fragen.length * 100);
     document.getElementById('ts-prozent').textContent = prozent + ' %';
     document.getElementById('ts-prozent').className = 'gross';
-    document.getElementById('ts-punkte').textContent = punkte + ' von ' + ts.fragen.length + ' Fragen richtig'
-        + '';
+    document.getElementById('ts-punkte').textContent = punkte + ' von ' + ts.fragen.length + ' Fragen richtig' + '';
     document.getElementById('ts-ergebnis').hidden = false;
     document.getElementById('ts-abgeben').hidden = true;
     window.scrollTo({ top: 0, behavior: 'smooth' });

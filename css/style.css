@@ -1,6 +1,5 @@
 /*
- * style.css – Aussehen der Lernkarten-App.
- * Bewusst schlicht gehalten: wenige Farben, einfache Rahmen, keine Schatten.
+ *  Aussehen der Lernkarten-App.
  *
  * Aufbau:
  *   1. Farben (CSS-Variablen) für hell und dunkel
@@ -12,10 +11,10 @@
 /* ---------- 1. Farben ---------- */
 
 :root {
-    --seite: #eef1f5;           /* grauer Rand um den Inhalt */
-    --hintergrund: #ffffff;     /* Inhaltsbereich */
+    --seite: #eef1f5;           
+    --hintergrund: #ffffff;     
     --flaeche: #f5f7fa;
-    --kopf: #24477e;            /* Kopfleiste */
+    --kopf: #24477e;            
     --text: #222222;
     --leise: #666666;
     --rand: #cccccc;
@@ -67,8 +66,7 @@
     box-sizing: border-box;
 }
 
-/* Elemente mit dem HTML-Attribut "hidden" immer ausblenden,
-   auch wenn eine andere Regel (z. B. display: flex) etwas anderes sagt. */
+/* Elemente mit dem HTML-Attribut "hidden" immer ausblenden */
 [hidden] {
     display: none !important;
 }

@@ -1,6 +1,6 @@
 <?php
 /*
- * api.php – kleine Schnittstelle für JavaScript (Ajax mit fetch()).
+ * Kleine Schnittstelle für JavaScript (Ajax mit fetch()).
  * Antwortet immer mit JSON.
  *
  *   GET  api.php?aktion=set&id=...                     -> ganzes Set laden
@@ -8,6 +8,7 @@
  *   POST api.php  aktion=antwort, id, karte, richtig   -> Antwort im Lernfortschritt speichern
  *   POST api.php  aktion=bestzeit, id, zeit            -> Zeit im Zuordnen-Modus speichern
  */
+
 require __DIR__ . '/inc/daten.php';
 
 header('Content-Type: application/json; charset=utf-8');
@@ -76,7 +77,6 @@ if ($aktion === 'antwort') {
     } else {
         $set['karten'][$position]['falsch']++;
     }
-    // "gekonnt" heißt: die letzte Antwort zu dieser Karte war richtig.
     $set['karten'][$position]['gekonnt'] = $richtig;
     speichere_set($set);
     antworte(['ok' => true, 'statistik' => statistik($set)]);

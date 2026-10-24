@@ -1,5 +1,5 @@
 /*
- * gemeinsam.js – Funktionen, die auf allen Seiten bzw. in allen Lernmodi gebraucht werden:
+ * Funktionen, die auf allen Seiten bzw. in allen Lernmodi gebraucht werden:
  *   - Hell/Dunkel umschalten
  *   - Sicherheitsabfrage vor dem Löschen
  *   - Stern-Knöpfe und Vorlesen-Knöpfe
@@ -75,8 +75,8 @@ function vorlesen(text, sprache, beiEnde) {
     if (stimmen.length === 0) ladeStimmen(); // falls die Liste noch leer war
     const aeusserung = new SpeechSynthesisUtterance(text);
     aeusserung.lang = sprache || 'de-DE';
-    // Ohne passende Stimme nimmt der Browser seine Standardstimme (oft Englisch).
-    const stimme = findeStimme(aeusserung.lang);
+    // Passende Stimme suchen (falls vorhanden), sonst nimmt der Browser die Standardstimme.
+    const stimme = speechSynthesis.getVoices().find(s => s.lang.replace('_', '-').startsWith(aeusserung.lang.slice(0, 2)));
     if (stimme) aeusserung.voice = stimme;
     if (beiEnde) aeusserung.onend = beiEnde;
     speechSynthesis.speak(aeusserung);
@@ -99,7 +99,7 @@ document.querySelectorAll('[data-stern]').forEach(knopf => {
 
 /* ---------- Kommunikation mit dem Server (api.php) ---------- */
 
-/** Schickt Daten per POST an api.php und gibt die JSON-Antwort zurück (oder null bei Fehler). */
+// Schickt Daten per POST an api.php und gibt die JSON-Antwort zurück (oder null bei Fehler).
 async function sendeAnServer(felder) {
     const formular = new FormData();
     for (const [name, wert] of Object.entries(felder)) {
@@ -114,15 +114,13 @@ async function sendeAnServer(felder) {
     }
 }
 
-/** Speichert, ob eine Karte richtig oder falsch beantwortet wurde. */
+// Speichert, ob eine Karte richtig oder falsch beantwortet wurde. 
 function speichereAntwort(setId, karteId, richtig) {
     return sendeAnServer({ aktion: 'antwort', id: setId, karte: karteId, richtig: richtig ? '1' : '0' });
 }
 
-/**
- * Lädt das Set für den aktuellen Lernmodus (Infos stehen in #lernbereich, siehe lernen.php).
- * Gibt ein Objekt { set, karten } zurück. "karten" sind ggf. nur die mit Stern.
- */
+// Lädt das Set für den aktuellen Lernmodus (Infos stehen in #lernbereich, siehe lernen.php).
+// Gibt ein Objekt { set, karten } zurück. "karten" sind ggf. nur die mit Stern. 
 async function ladeLernSet() {
     const bereich = document.getElementById('lernbereich');
     const hinweis = document.getElementById('lade-hinweis');
@@ -146,7 +144,7 @@ async function ladeLernSet() {
 
 /* ---------- Hilfsfunktionen ---------- */
 
-/** Gibt eine gemischte Kopie des Arrays zurück (Fisher-Yates-Verfahren). */
+// Gibt eine gemischte Kopie des Arrays zurück.
 function mische(liste) {
     const kopie = [...liste];
     for (let i = kopie.length - 1; i > 0; i--) {
@@ -156,24 +154,22 @@ function mische(liste) {
     return kopie;
 }
 
-/**
- * Liefert für eine Karte Frage und Antwort.
- * antwortMit = "begriff"    -> Definition wird gezeigt, Begriff ist die Antwort (wie bei Quizlet)
- * antwortMit = "definition" -> Begriff wird gezeigt, Definition ist die Antwort
- */
+// Liefert für eine Karte Frage und Antwort.
+// antwortMit = "begriff"    -> Definition wird gezeigt, Begriff ist die Antwort
+// antwortMit = "definition" -> Begriff wird gezeigt, Definition ist die Antwort
 function frageUndAntwort(karte, set, antwortMit) {
     if (antwortMit === 'definition') {
         return { frage: karte.begriff, antwort: karte.definition,
-                 frageSprache: set.sprache_begriff, antwortSprache: set.sprache_definition };
+                 frageSprache: set.sprache_begriff, antwortSprache: set.sprache_definition
+                };
     }
     return { frage: karte.definition, antwort: karte.begriff,
-             frageSprache: set.sprache_definition, antwortSprache: set.sprache_begriff };
+             frageSprache: set.sprache_definition, antwortSprache: set.sprache_begriff
+            };
 }
 
-/**
- * Sucht bis zu "anzahl" falsche Antwortmöglichkeiten aus ANDEREN Karten desselben Sets.
- * Doppelte Texte werden ausgelassen.
- */
+// Sucht bis zu "anzahl" falsche Antwortmöglichkeiten aus anderen Karten desselben Sets.
+// Doppelte Texte werden ausgelassen.
 function falscheAntworten(karte, alleKarten, antwortMit, anzahl) {
     const richtig = karte[antwortMit];
     const kandidaten = [];
@@ -187,15 +183,17 @@ function falscheAntworten(karte, alleKarten, antwortMit, anzahl) {
     return kandidaten;
 }
 
-/** Text vereinfachen: klein, ohne doppelte Leerzeichen und ohne Satzzeichen am Ende. */
+// Text vereinfachen: klein, ohne doppelte Leerzeichen und ohne Satzzeichen am Ende.
 function normalisiere(text) {
     return text.normalize('NFC').toLowerCase().trim()
         .replace(/\s+/g, ' ')
         .replace(/[.,;:!?]+$/, '');
 }
 
-/** Levenshtein-Distanz: wie viele Buchstaben muss man ändern, um von a nach b zu kommen? */
-function levenshtein(a, b) {
+// Zählt, wie viele Buchstaben man einfügen, löschen oder ändern muss,
+// um aus a das Wort b zu machen (Levenshtein-Distanz).
+// Beispiel: zaehleTippfehler("javscript", "javascript") ergibt 1
+function zaehleTippfehler(a, b) {
     const zeile = Array.from({ length: b.length + 1 }, (_, i) => i);
     for (let i = 1; i <= a.length; i++) {
         let vorher = zeile[0];
@@ -210,10 +208,8 @@ function levenshtein(a, b) {
     return zeile[b.length];
 }
 
-/**
- * Prüft eine eingetippte Antwort tolerant.
- * Rückgabe: "richtig", "fast" (kleiner Tippfehler, zählt als richtig) oder "falsch".
- */
+// Prüft eine eingetippte Antwort tolerant.
+// Rückgabe: "richtig", "fast" (kleiner Tippfehler, zählt als richtig) oder "falsch".
 function pruefeAntwort(eingabe, loesung) {
     const a = normalisiere(eingabe);
     const b = normalisiere(loesung);
@@ -221,10 +217,10 @@ function pruefeAntwort(eingabe, loesung) {
     if (a === b) return 'richtig';
     // Erlaubte Tippfehler: ca. 1 pro 6 Zeichen, bei sehr kurzen Wörtern keiner.
     const erlaubt = b.length < 4 ? 0 : Math.max(1, Math.floor(b.length / 6));
-    return levenshtein(a, b) <= erlaubt ? 'fast' : 'falsch';
+    return zaehleTippfehler(a, b) <= erlaubt ? 'fast' : 'falsch';
 }
 
-/** Setzt Text sicher in HTML ein (verhindert, dass Karteninhalt als HTML ausgeführt wird). */
+// Setzt Text sicher in HTML ein (verhindert, dass Karteninhalt als HTML ausgeführt wird).
 function escapeHtml(text) {
     const div = document.createElement('div');
     div.textContent = text;

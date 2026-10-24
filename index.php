@@ -1,8 +1,6 @@
+
 <?php
-/*
- * index.php – Startseite: zeigt alle Lernsets, nach Fach (Ordner) gruppiert,
- * und bietet eine Suche über alle Karten.
- */
+// Startseite: zeigt alle Lernsets, nach Fach (Ordner) gruppiert, und bietet eine Suche über alle Karten.
 require __DIR__ . '/inc/daten.php';
 
 $sets = lade_alle_sets();
@@ -32,15 +30,16 @@ $titel = 'Meine Sets';
 require __DIR__ . '/inc/kopf.php';
 ?>
 
+// HTML
 <h1>Meine Lernsets</h1>
 <form class="suche" method="get" action="index.php">
-    <input type="search" name="suche" value="<?= e($suche) ?>" placeholder="Alle Karten durchsuchen …" aria-label="Suche">
+    <input type="search" name="suche" value="<?= escape($suche) ?>" placeholder="Alle Karten durchsuchen …" aria-label="Suche">
     <button type="submit" class="knopf">Suchen</button>
 </form>
 
 <?php if ($suche !== ''): ?>
     <section>
-        <h2><?= count($treffer) ?> Treffer für „<?= e($suche) ?>“</h2>
+        <h2><?= count($treffer) ?> Treffer für "<?= escape($suche) ?>"</h2>
         <?php if (count($treffer) === 0): ?>
             <p class="leise">Keine Karte gefunden.</p>
         <?php else: ?>
@@ -48,9 +47,9 @@ require __DIR__ . '/inc/kopf.php';
                 <tr><th>Begriff</th><th>Definition</th><th>Set</th></tr>
                 <?php foreach ($treffer as $t): ?>
                     <tr>
-                        <td class="begriff"><?= e($t['karte']['begriff']) ?></td>
-                        <td><?= e($t['karte']['definition']) ?></td>
-                        <td><a href="set.php?id=<?= e($t['set']['id']) ?>"><?= e($t['set']['name']) ?></a></td>
+                        <td class="begriff"><?= escape($t['karte']['begriff']) ?></td>
+                        <td><?= escape($t['karte']['definition']) ?></td>
+                        <td><a href="set.php?id=<?= escape($t['set']['id']) ?>"><?= escape($t['set']['name']) ?></a></td>
                     </tr>
                 <?php endforeach; ?>
             </table>
@@ -67,17 +66,15 @@ require __DIR__ . '/inc/kopf.php';
 <?php endif; ?>
 
 <?php foreach ($nach_fach as $fach => $sets_im_fach): ?>
-    <h2><?= e($fach) ?></h2>
+    <h2><?= escape($fach) ?></h2>
     <ul class="setliste">
         <?php foreach ($sets_im_fach as $set): ?>
             <?php $stat = statistik($set); ?>
             <li>
-                <a href="set.php?id=<?= e($set['id']) ?>"><?= e($set['name']) ?></a>
+                <a href="set.php?id=<?= escape($set['id']) ?>"><?= escape($set['name']) ?></a>
                 <span class="leise"><?= $stat['gesamt'] ?> Karten, <?= $stat['prozent'] ?> % gekonnt</span>
                 <span class="fortschritt"><span style="width: <?= $stat['prozent'] ?>%"></span></span>
             </li>
         <?php endforeach; ?>
     </ul>
 <?php endforeach; ?>
-
-<?php require __DIR__ . '/inc/fuss.php'; ?>

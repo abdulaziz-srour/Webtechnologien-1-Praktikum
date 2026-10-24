@@ -1,5 +1,5 @@
 /*
- * karteikarten.js – Modus "Karteikarten":
+ * Modus "Karteikarten":
  * Karte umdrehen (mit CSS-Animation), vor/zurück blättern, mischen,
  * Vorder- und Rückseite tauschen, vorlesen und automatisch abspielen.
  */
@@ -14,10 +14,10 @@ const kk = {
 
 const kkKarte = document.getElementById('kk-karte');
 
-/** Zeigt die Karte an der aktuellen Position an (immer mit der Vorderseite zuerst). */
+// Zeigt die Karte an der aktuellen Position an (immer mit der Vorderseite zuerst).
 function zeigeKarte() {
     const karte = kk.karten[kk.position];
-    // Neue Karte ohne Dreh-Animation auf die Vorderseite legen, sonst sähe man kurz die neue Rückseite.
+    // Neue Karte ohne Dreh-Animation auf die Vorderseite legen, sonst sieht man kurz die neue Rückseite.
     kkKarte.classList.add('ohne-animation');
     kkKarte.classList.remove('umgedreht');
     void kkKarte.offsetWidth; // Browser zwingen, den Zustand sofort zu übernehmen
@@ -43,7 +43,7 @@ function zurueck() {
     zeigeKarte();
 }
 
-/** Liest die gerade sichtbare Seite in der passenden Sprache vor. */
+// Liest die gerade sichtbare Seite in der passenden Sprache vor.
 function leseSichtbareSeite(beiEnde) {
     const karte = kk.karten[kk.position];
     const hintenSichtbar = kkKarte.classList.contains('umgedreht');
@@ -55,7 +55,7 @@ function leseSichtbareSeite(beiEnde) {
     }
 }
 
-/** Automatisch abspielen: Vorderseite vorlesen, umdrehen, Rückseite vorlesen, nächste Karte … */
+// Automatisch abspielen: Vorderseite vorlesen, umdrehen, Rückseite vorlesen, nächste Karte …
 function autoSchritt() {
     if (!kk.auto) return;
     leseSichtbareSeite(() => {

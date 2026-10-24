@@ -1,8 +1,7 @@
+
 <?php
-/*
- * set.php?id=... – Übersicht über ein Lernset:
- * Statistik, Auswahl des Lernmodus und Liste aller Karten (mit Stern und Vorlesen).
- */
+// Übersicht über ein Lernset:
+// Statistik, Auswahl des Lernmodus und Liste aller Karten (mit Stern und Vorlesen).
 require __DIR__ . '/inc/daten.php';
 
 $id = $_GET['id'] ?? '';
@@ -43,19 +42,19 @@ require __DIR__ . '/inc/kopf.php';
 ?>
 
 <p><a href="index.php">Zurück zur Übersicht</a></p>
-<h1><?= e($set['name']) ?></h1>
+<h1><?= escape($set['name']) ?></h1>
 <p class="leise">
-    Fach: <?= e($set['fach'] !== '' ? $set['fach'] : 'ohne Fach') ?>
-    <?php if ($set['beschreibung'] !== ''): ?> – <?= e($set['beschreibung']) ?><?php endif; ?>
+    Fach: <?= escape($set['fach'] !== '' ? $set['fach'] : 'ohne Fach') ?>
+    <?php if ($set['beschreibung'] !== ''): ?> – <?= escape($set['beschreibung']) ?><?php endif; ?>
 </p>
 
 <div class="aktionen">
-    <a class="knopf zweitrangig" href="bearbeiten.php?id=<?= e($id) ?>">Bearbeiten</a>
+    <a class="knopf zweitrangig" href="bearbeiten.php?id=<?= escape($id) ?>">Bearbeiten</a>
     <form method="post" data-bestaetigen="Lernfortschritt für dieses Set wirklich zurücksetzen?">
         <input type="hidden" name="aktion" value="zuruecksetzen">
         <button type="submit" class="knopf zweitrangig">Fortschritt zurücksetzen</button>
     </form>
-    <form method="post" data-bestaetigen="Set „<?= e($set['name']) ?>“ wirklich löschen?">
+    <form method="post" data-bestaetigen="Set „<?= escape($set['name']) ?>“ wirklich löschen?">
         <input type="hidden" name="aktion" value="loeschen">
         <button type="submit" class="knopf gefahr">Löschen</button>
     </form>
@@ -74,7 +73,7 @@ require __DIR__ . '/inc/kopf.php';
 <!-- Modus-Auswahl: ein normales GET-Formular. Jeder Knopf schickt einen anderen Wert für "modus". -->
 <h2>Lernen</h2>
 <form method="get" action="lernen.php">
-    <input type="hidden" name="id" value="<?= e($id) ?>">
+    <input type="hidden" name="id" value="<?= escape($id) ?>">
     <div class="aktionen">
         <?php foreach ($modi as $schluessel => $modus): ?>
             <button type="submit" name="modus" value="<?= $schluessel ?>" class="knopf" title="<?= $modus['text'] ?>"><?= $modus['name'] ?></button>
@@ -99,19 +98,17 @@ require __DIR__ . '/inc/kopf.php';
     <tbody>
         <?php foreach ($set['karten'] as $karte): ?>
             <tr class="<?= $karte['gekonnt'] ? 'gekonnt' : '' ?>">
-                <td class="begriff"><?= e($karte['begriff']) ?></td>
-                <td><?= e($karte['definition']) ?></td>
+                <td class="begriff"><?= escape($karte['begriff']) ?></td>
+                <td><?= escape($karte['definition']) ?></td>
                 <td><?= $karte['richtig'] ?> / <?= $karte['falsch'] ?></td>
                 <td class="knoepfe">
                     <!-- data-*-Attribute werden von js/gemeinsam.js ausgelesen. -->
                     <button type="button" class="knopf-klein"
-                            data-vorlesen="<?= e($karte['begriff']) ?>" data-sprache="<?= e($set['sprache_begriff']) ?>">Vorlesen</button>
+                            data-vorlesen="<?= escape($karte['begriff']) ?>" data-sprache="<?= escape($set['sprache_begriff']) ?>">Vorlesen</button>
                     <button type="button" class="knopf-klein stern <?= $karte['stern'] ? 'aktiv' : '' ?>" title="Karte markieren"
-                            data-stern="<?= e($karte['id']) ?>" data-set="<?= e($id) ?>">★</button>
+                            data-stern="<?= escape($karte['id']) ?>" data-set="<?= escape($id) ?>">★</button>
                 </td>
             </tr>
         <?php endforeach; ?>
     </tbody>
 </table>
-
-<?php require __DIR__ . '/inc/fuss.php'; ?>

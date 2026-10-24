@@ -1,5 +1,5 @@
 /*
- * schreiben.js – Modus "Schreiben":
+ * Modus "Schreiben":
  * Die Antwort wird eingetippt und tolerant geprüft (siehe pruefeAntwort in gemeinsam.js).
  * Nach jeder Runde werden nur die falsch beantworteten Karten wiederholt,
  * bis alle Karten einmal richtig waren.
@@ -21,14 +21,14 @@ const scFormular = document.getElementById('sc-formular');
 const scEingabe = document.getElementById('sc-eingabe');
 const scFeedback = document.getElementById('sc-feedback');
 
-/** Kompletten Durchgang neu starten (alle Karten, Runde 1). */
+// Kompletten Durchgang neu starten (alle Karten, Runde 1).
 function starteSchreiben() {
     sc.antwortMit = document.getElementById('sc-antwort-mit').value;
     sc.runde = 0;
     starteRunde(sc.karten);
 }
 
-/** Eine Runde mit den übergebenen Karten (gemischt) beginnen. */
+// Eine Runde mit den übergebenen Karten (gemischt) beginnen.
 function starteRunde(karten) {
     sc.runde++;
     sc.rundenKarten = mische(karten);
@@ -54,7 +54,7 @@ function zeigeSchreibFrage() {
     scEingabe.focus();
 }
 
-/** Ergebnis anzeigen. ergebnis = "richtig", "fast" oder "falsch". */
+// Ergebnis anzeigen. ergebnis = "richtig", "fast" oder "falsch".
 function zeigeSchreibErgebnis(ergebnis, eingabe) {
     const loesung = frageUndAntwort(sc.rundenKarten[sc.nr], sc.set, sc.antwortMit).antwort;
     sc.beantwortet = true;
@@ -79,7 +79,7 @@ function zeigeSchreibErgebnis(ergebnis, eingabe) {
     document.getElementById('sc-weiter').focus();
 }
 
-/** Ergebnis übernehmen, speichern und zur nächsten Karte bzw. zum Rundenende. */
+// Ergebnis übernehmen, speichern und zur nächsten Karte bzw. zum Rundenende.
 function schreibWeiter() {
     const karte = sc.rundenKarten[sc.nr];
     if (!sc.richtig) sc.falsche.push(karte);

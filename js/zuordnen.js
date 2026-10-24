@@ -1,5 +1,5 @@
 /*
- * zuordnen.js – Modus "Zuordnen":
+ * Modus "Zuordnen":
  * Bis zu 6 Begriffe und ihre Definitionen liegen gemischt als Kacheln da.
  * Passende Paare per Drag-and-Drop (oder zwei Klicks) zusammenführen, auf Zeit.
  * Die Bestzeit speichert PHP (api.php, aktion=bestzeit) im Set.
@@ -33,7 +33,7 @@ function zeigeBestzeit() {
     document.getElementById('zo-bestzeit-start').textContent = text;
 }
 
-/** Neues Spiel: Karten auswählen, Kacheln mischen, Timer starten. */
+// Neues Spiel: Karten auswählen, Kacheln mischen, Timer starten.
 function starteZuordnen() {
     const auswahl = mische(zo.karten).slice(0, ZO_PAARE);
     const kacheln = [];
@@ -69,7 +69,7 @@ function starteZuordnen() {
     }, 100);
 }
 
-/** Prüft, ob zwei Kacheln zusammenpassen. */
+// Prüft, ob zwei Kacheln zusammenpassen.
 function versucheTreffer(a, b) {
     if (!a || !b || a === b) return;
     if (a.dataset.karte === b.dataset.karte) {
@@ -96,7 +96,7 @@ async function beendeZuordnen() {
     document.getElementById('zo-spiel').hidden = true;
     document.getElementById('zo-ende').hidden = false;
 
-    // Zeit an PHP schicken – der Server entscheidet, ob es eine neue Bestzeit ist.
+    // Zeit schicken -> Der Server entscheidet, ob es eine neue Bestzeit ist.
     const daten = await sendeAnServer({ aktion: 'bestzeit', id: zo.set.id, zeit: zeit.toFixed(1) });
     const rekord = document.getElementById('zo-rekord');
     if (daten && daten.neuer_rekord) {
@@ -114,7 +114,6 @@ let gezogen = null;
 
 zoRaster.addEventListener('dragstart', ereignis => {
     gezogen = ereignis.target.closest('.kachel');
-    // Firefox startet das Ziehen nur, wenn Daten gesetzt werden.
     ereignis.dataTransfer.setData('text/plain', gezogen.dataset.nr);
     ereignis.dataTransfer.effectAllowed = 'move';
 });

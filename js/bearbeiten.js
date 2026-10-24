@@ -8,16 +8,16 @@
 const zeilenBereich = document.getElementById('karten-zeilen');
 const vorlage = document.getElementById('zeilen-vorlage');
 
-/** Nummeriert alle sichtbaren Zeilen neu (1, 2, 3, …). */
+// Nummeriert alle sichtbaren Zeilen neu (1, 2, 3, …).
 function nummeriereZeilen() {
     zeilenBereich.querySelectorAll('.karten-zeile .nummer').forEach((nummer, i) => {
         nummer.textContent = i + 1;
     });
 }
 
-/** Fügt eine leere Zeile am Ende hinzu und setzt den Cursor hinein. */
+// Fügt eine leere Zeile am Ende hinzu und setzt den Cursor hinein.
 function neueZeile() {
-    // Jede Zeile braucht im Namen eine eindeutige Nummer, z. B. karten[7][begriff].
+    // Jede Zeile braucht im Namen eine eindeutige Nummer, z.B. karten[7][begriff].
     const nr = Number(zeilenBereich.dataset.naechster);
     zeilenBereich.dataset.naechster = nr + 1;
 
@@ -37,7 +37,7 @@ zeilenBereich.addEventListener('click', ereignis => {
     }
 });
 
-// Tab in der letzten Definition -> automatisch neue Zeile (wie bei Quizlet).
+// Tab in der letzten Definition -> automatisch neue Zeile.
 zeilenBereich.addEventListener('keydown', ereignis => {
     const letzte = zeilenBereich.lastElementChild;
     if (ereignis.key === 'Tab' && !ereignis.shiftKey && letzte &&
