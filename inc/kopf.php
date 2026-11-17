@@ -1,4 +1,3 @@
-
 <?php 
 // Seitenanfang (HTML-Kopf und Navigationsleiste).
 $titel = $titel ?? 'Lernkarten';?>

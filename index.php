@@ -1,4 +1,3 @@
-
 <?php
 // Startseite: zeigt alle Lernsets, nach Fach (Ordner) gruppiert, und bietet eine Suche über alle Karten.
 require __DIR__ . '/inc/daten.php';
@@ -30,7 +29,7 @@ $titel = 'Meine Sets';
 require __DIR__ . '/inc/kopf.php';
 ?>
 
-// HTML
+<!-- HTML -->
 <h1>Meine Lernsets</h1>
 <form class="suche" method="get" action="index.php">
     <input type="search" name="suche" value="<?= escape($suche) ?>" placeholder="Alle Karten durchsuchen …" aria-label="Suche">

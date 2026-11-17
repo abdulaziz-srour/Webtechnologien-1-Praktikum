@@ -1,4 +1,3 @@
-
 <?php
 // Übersicht über ein Lernset:
 // Statistik, Auswahl des Lernmodus und Liste aller Karten (mit Stern und Vorlesen).

@@ -1,4 +1,3 @@
-
 <?php
 /*
  * Liste aller Lernmodi.
